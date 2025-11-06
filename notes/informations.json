@@ -1,0 +1,105 @@
+[
+  {
+    "type": "DNS",
+    "detailsType": "deleting-dns-record",
+    "payload": {
+      "recordType": "TXT",
+      "host": "@",
+      "value": "old-verification",
+      "reason": "permission-denied"
+    }
+  },
+  {
+    "type": "DIFF",
+    "detailsType": "upserting-vhost",
+    "diff": {
+      "before": {
+        "rules": [
+          {
+            "match": "/images/*",
+            "action": "cache",
+            "ttl": 3600
+          },
+          {
+            "match": "/api/*",
+            "action": "bypass"
+          }
+        ],
+        "enabled": true,
+        "version": 12
+      },
+      "after": {
+        "rules": [
+          {
+            "match": "/images/*",
+            "action": "cache",
+            "ttl": 7200
+          },
+          {
+            "match": "/api/*",
+            "action": "bypass"
+          },
+          {
+            "match": "/fonts/*",
+            "action": "cache",
+            "ttl": 86400
+          }
+        ],
+        "enabled": true,
+        "version": 13
+      }
+    }
+  },
+  {
+    "type": "CONFIG",
+    "detailsType": "deleting-config",
+    "payload": {
+      "feature": "image-optimizer",
+      "enabled": false,
+      "error": "missing-license"
+    }
+  },
+  {
+    "type": "DNS",
+    "detailsType": "updating-dns-record",
+    "payload": {
+      "recordType": "A",
+      "host": "www",
+      "before": "203.0.113.10",
+      "after": "203.0.113.42",
+      "ttl": 300
+    }
+  },
+  {
+    "type": "CONFIG",
+    "detailsType": "deleting-config",
+    "payload": {
+      "feature": "lazyload",
+      "enabled": false,
+      "error": "invalid-selector"
+    }
+  },
+  {
+    "type": "CONFIG",
+    "detailsType": "deleting-config",
+    "payload": {
+      "path": "/edge/features/rollout",
+      "before": {
+        "canary": true,
+        "ratio": 0.1
+      },
+      "after": {
+        "canary": false,
+        "ratio": 0
+      }
+    }
+  },
+  {
+    "type": "CONFIG",
+    "detailsType": "upserting-vhost",
+    "payload": {
+      "feature": "brotli",
+      "enabled": true
+    }
+  }
+]
