@@ -33,7 +33,8 @@ const ErrorReplySchema = Type.Object({
 
 export const EventsReplySchema = Type.Object({
   200: SuccessEventsReplySchema,
-  400: ErrorReplySchema,
+  "4xx": ErrorReplySchema,
+  "5xx": ErrorReplySchema,
 });
 
 export type EventsReply = Static<typeof EventsReplySchema>;

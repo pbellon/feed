@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@feed/web",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -21,12 +21,12 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.15.3",
+    "@feed/eslint-config": "workspace:*",
+    "@feed/typescript-config": "workspace:*",
+    "@types/node": "22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
-    "eslint": "^9.39.1",
+    "eslint": "9.39.1",
     "typescript": "5.9.2"
   }
 }

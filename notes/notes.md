@@ -1,5 +1,6 @@
 # Plan
-- modeliser les données
+
+- modeliser les données - almost good
 - architecture globale du projet
 - squelette du front
 - implem DB
@@ -12,6 +13,8 @@
 
 # Notes sur le dev / Amélioration V2
 
+## automatisation
+- trop de taches manuelles pour la partie API / types, très probablement automatisable via nodemon mais j'ai pas voulu complexifier plus que ça
 
 ## apps/api/scripts/db.js
 

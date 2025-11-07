@@ -1,4 +1,4 @@
-import { type Static, Type } from 'typebox'
+import { type Static, Type } from "typebox";
 
 export const UserSchema = Type.Object({
   id: Type.Integer(),
@@ -6,29 +6,28 @@ export const UserSchema = Type.Object({
 });
 export type User = Static<typeof UserSchema>;
 
-
 export enum EventTypeEnum {
-  ADD = 'ADD',
-  CREATE = 'CREATE',
-  DELETE = 'DELETE',
-  DUPLICATE = 'DUPLICATE',
-  FLUSH_CACHE = 'FLUSH_CACHE',
-  INSTALL = 'INSTALL',
-  OPTIMIZE = 'OPTIMIZE',
-  PLUG = 'PLUG',
-  RENEWAL = 'RENEWAL',
-  TRIGGER = 'TRIGGER',
-  UNPLUG = 'UNPLUG',
-  UPDATE = 'UPDATE',
-  UPLOAD = 'UPLOAD',
+  ADD = "ADD",
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+  DUPLICATE = "DUPLICATE",
+  FLUSH_CACHE = "FLUSH_CACHE",
+  INSTALL = "INSTALL",
+  OPTIMIZE = "OPTIMIZE",
+  PLUG = "PLUG",
+  RENEWAL = "RENEWAL",
+  TRIGGER = "TRIGGER",
+  UNPLUG = "UNPLUG",
+  UPDATE = "UPDATE",
+  UPLOAD = "UPLOAD",
 }
 export const EventTypeSchema = Type.Enum(EventTypeEnum);
 
 export enum EventStatusEnum {
-  COMPLETED = 'COMPLETED',
-  FAILED = 'FAILED',
-  IN_PROGRESS = 'IN_PROGRESS',
-};
+  COMPLETED = "COMPLETED",
+  FAILED = "FAILED",
+  IN_PROGRESS = "IN_PROGRESS",
+}
 
 export const EventStatusSchema = Type.Enum(EventStatusEnum);
 
@@ -41,3 +40,10 @@ export const EventSchema = Type.Object({
 });
 
 export type Event = Static<typeof EventSchema>;
+
+export const WebsiteSchema = Type.Object({
+  id: Type.Integer(),
+  domain: Type.String({ format: "hostname" }),
+});
+
+export type Website = Static<typeof WebsiteSchema>;

@@ -2,6 +2,7 @@
   "name": "feed",
   "private": true,
   "scripts": {
+    "db:init": "pnpm --filter @feed/api db:init",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",

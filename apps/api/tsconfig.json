@@ -42,6 +42,6 @@
     "skipLibCheck": true,
 
     // Ensure node_modules types are included
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types", "./types"]
   }
 }
