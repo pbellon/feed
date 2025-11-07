@@ -6,7 +6,7 @@ export const UserSchema = Type.Object({
 });
 export type User = Static<typeof UserSchema>;
 
-export enum EventTypeEnum {
+export enum FeedEventTypeEnum {
   ADD = "ADD",
   CREATE = "CREATE",
   DELETE = "DELETE",
@@ -21,25 +21,25 @@ export enum EventTypeEnum {
   UPDATE = "UPDATE",
   UPLOAD = "UPLOAD",
 }
-export const EventTypeSchema = Type.Enum(EventTypeEnum);
+export const FeedEventTypeSchema = Type.Enum(FeedEventTypeEnum);
 
-export enum EventStatusEnum {
+export enum FeedEventStatusEnum {
   COMPLETED = "COMPLETED",
   FAILED = "FAILED",
   IN_PROGRESS = "IN_PROGRESS",
 }
 
-export const EventStatusSchema = Type.Enum(EventStatusEnum);
+export const FeedEventStatusSchema = Type.Enum(FeedEventStatusEnum);
 
-export const EventSchema = Type.Object({
+export const FeedEventSchema = Type.Object({
   id: Type.Integer(),
   createdAt: Type.String({ format: "date-time" }),
   updatedAt: Type.Optional(Type.String({ format: "date-time" })),
   user: UserSchema,
-  status: EventStatusSchema,
+  status: FeedEventStatusSchema,
 });
 
-export type Event = Static<typeof EventSchema>;
+export type FeedEvent = Static<typeof FeedEventSchema>;
 
 export const WebsiteSchema = Type.Object({
   id: Type.Integer(),

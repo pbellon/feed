@@ -15,53 +15,72 @@ function init(db: Sqlite3Database.Database) {
     const createTables = db.transaction(() => {
       db.prepare(
         `CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        fullname TEXT NOT NULL
-      )`
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          fullname TEXT NOT NULL
+        )`
       ).run();
 
       db.prepare(
         `CREATE TABLE IF NOT EXISTS websites (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        domain TEXT NOT NULL
-      )`
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          domain TEXT NOT NULL
+        )`
       ).run();
 
       db.prepare(
         `CREATE TABLE IF NOT EXISTS events (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
-        website_id INTEGER REFERENCES websites(id) ON DELETE CASCADE,
-        event_type TEXT NOT NULL CHECK (event_type IN (
-          'ADD',
-          'CREATE',
-          'DELETE',
-          'DUPLICATE',
-          'FLUSH_CACHE',
-          'INSTALL',
-          'OPTIMIZE',
-          'PLUG',
-          'RENEWAL',
-          'TRIGGER',
-          'UNPLUG',
-          'UPDATE',
-          'UPLOAD'
-        )),
-        event_status TEXT NOT NULL CHECK (event_status IN ('COMPLETED','FAILED','IN_PROGRESS')),
-        created_at TEXT NOT NULL,
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+          website_id INTEGER REFERENCES websites(id) ON DELETE CASCADE,
+          event_type TEXT NOT NULL CHECK (event_type IN (
+            'ADD',
+            'CREATE',
+            'DELETE',
+            'DUPLICATE',
+            'FLUSH_CACHE',
+            'INSTALL',
+            'OPTIMIZE',
+            'PLUG',
+            'RENEWAL',
+            'TRIGGER',
+            'UNPLUG',
+            'UPDATE',
+            'UPLOAD'
+          )),
 
-        -- arbitrary JSON, needs valid JSON string and parsing when querying if not null
-        information TEXT,
+          event_status TEXT NOT NULL CHECK (event_status IN ('COMPLETED','FAILED','IN_PROGRESS')),
 
-        -- incomplete mapping, should create dedicated table
-        project_id INTEGER,
-        application_id TEXT
+          event_subject TEXT NOT NULL CHECK (event_subject IN (
+              'APPLICATION',
+              'CACHE',
+              'CERTIFICATE',
+              'CONFIG',
+              'DNS',
+              'JOB',
+              'OPTIMIZATION',
+              'PLUG',
+              'TARGET',
+              'USER'
+          )),
+
+          description TEXT,
+          support_ticket TEXT,
+          request_id TEXT,
+          created_at TEXT NOT NULL,
+          updated_at TEXT,
+
+          -- arbitrary JSON, needs valid JSON string and parsing when querying if not null
+          information TEXT,
+
+          -- incomplete mapping, should create dedicated table
+          project_id INTEGER,
+          application_id TEXT
       )`
       ).run();
     });
 
     createTables();
-    console.log("[scripts/db/init] Done");
+    console.log("[scripts/db/init] Done, database properly set up");
   } catch (error) {
     console.error("[scripts/db/init] An error occurred:", error);
   }
@@ -89,6 +108,16 @@ function loadFixtures(db: Sqlite3Database.Database) {
       ON CONFLICT(id) DO NOTHING`
     );
 
+    const insertEvent = db.prepare(
+      `INSERT INTO events (
+        id, user_id, website_id, event_type, event_status, event_subject,
+        description, support_ticket, request_id, created_at, updated_at,
+        information, project_id, application_id
+      ) VALUES (
+        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+      ) ON CONFLICT(id) DO NOTHING`
+    );
+
     const insertFixtures = db.transaction(() => {
       fixtures.websites.forEach((website: { id: number; domain: string }) => {
         insertWebsite.run(website.id, website.domain);
@@ -96,6 +125,25 @@ function loadFixtures(db: Sqlite3Database.Database) {
 
       fixtures.users.forEach((user: { id: number; name: string }) => {
         insertUser.run(user.id, user.name);
+      });
+
+      fixtures.events.forEach((event: any) => {
+        insertEvent.run(
+          event.id,
+          event.userId,
+          event.websiteId,
+          event.type,
+          event.status,
+          event.subject,
+          event.description,
+          event.supportTicket || null,
+          event.requestId || null,
+          event.createdAt,
+          event.updatedAt || null,
+          event.information ? JSON.stringify(event.information) : null,
+          event.projectId || null,
+          event.applicationId || null
+        );
       });
     });
 

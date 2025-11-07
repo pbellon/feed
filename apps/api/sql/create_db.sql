@@ -3,7 +3,6 @@ CREATE TABLE users (
   fullname TEXT NOT NULL
 );
 
-
 CREATE TABLE websites (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   domain TEXT NOT NULL
@@ -32,6 +31,19 @@ CREATE TABLE events (
 
   event_status TEXT NOT NULL CHECK (event_status IN ('COMPLETED','FAILED','IN_PROGRESS'))
 
+  event_subject TEXT NOT NULL CHECK (event_subject IN (
+      'APPLICATION',
+      'CACHE',
+      'CERTIFICATE',
+      'CONFIG',
+      'DNS',
+      'JOB',
+      'OPTIMIZATION',
+      'PLUG',
+      'TARGET',
+      'USER'
+  ))
+
 
   created_at TEXT NOT NULL,
 
@@ -43,6 +55,5 @@ CREATE TABLE events (
 
   -- not sure if deserve a dedicated table
   application_id TEXT,
-
 )
 
