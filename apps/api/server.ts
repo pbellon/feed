@@ -6,6 +6,7 @@ import {
   type FeedEvent,
   type Website,
   FeedEventStatusEnum,
+  FeedEventTypeEnum,
 } from "@feed/types";
 import Fastify from "fastify";
 import path from "node:path";
@@ -123,6 +124,7 @@ server.get(
       status: string;
       type: string;
       createdAt: string;
+      updatedAt: string | null;
       information: string | null;
       userId: number;
       userFullName: string;
@@ -146,15 +148,25 @@ server.get(
       pagination.nextPage = page + 1;
     }
 
-    const events: FeedEvent[] = rows.map((row) => ({
-      id: row.id,
-      status: row.status as FeedEventStatusEnum,
-      createdAt: row.createdAt,
-      user: {
-        id: row.userId,
-        fullName: row.userFullName,
-      },
-    }));
+    const events: FeedEvent[] = rows.map((row) => {
+      const res: FeedEvent = {
+        id: row.id,
+        status: row.status as FeedEventStatusEnum,
+        createdAt: row.createdAt,
+        type: row.type as FeedEventTypeEnum,
+        information: row.information ? JSON.parse(row.information) : undefined,
+        user: {
+          id: row.userId,
+          fullName: row.userFullName,
+        },
+      };
+
+      if (row.updatedAt) {
+        res.updatedAt = row.updatedAt;
+      }
+
+      return res;
+    });
 
     return {
       pagination,

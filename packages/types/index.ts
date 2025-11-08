@@ -37,6 +37,8 @@ export const FeedEventSchema = Type.Object({
   updatedAt: Type.Optional(Type.String({ format: "date-time" })),
   user: UserSchema,
   status: FeedEventStatusSchema,
+  type: FeedEventTypeSchema,
+  information: Type.Any(),
 });
 
 export type FeedEvent = Static<typeof FeedEventSchema>;
