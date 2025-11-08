@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
+import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 
 export default function NavBarLinks() {

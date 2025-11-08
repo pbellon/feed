@@ -1,5 +1,8 @@
 :root {
-  --background: #ffffff;
+  --background: #f9f9fb;
+  --main-background: #fff;
+  --main-border-color: #f1f1f1;
+
   --foreground: #171717;
 }
 
@@ -8,6 +11,7 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   font-family: var(--font-roboto);
+  height: 100%;
 }
 
 body {
