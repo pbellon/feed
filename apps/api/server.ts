@@ -1,23 +1,19 @@
 // https://fastify.dev/docs/latest/Reference/TypeScript/
 import { Type, type TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import {
-  FeedEventSchema,
   WebsiteSchema,
   type FeedEvent,
   type Website,
   FeedEventStatusEnum,
   FeedEventTypeEnum,
+  FeedEventsQuerystringSchema,
+  type PaginationData,
 } from "@feed/types";
 import Fastify from "fastify";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import fastifyBetterSqlite3Plugin from "./plugins/fastify-better-sqlite3.js";
-import {
-  ErrorReplySchema,
-  EventsQuerystringSchema,
-  EventsReplySchema,
-  type PaginationData,
-} from "./types.js";
+import { ApiFeedEventsReplySchema } from "./types.js";
 
 const distDir = path.dirname(fileURLToPath(import.meta.url));
 const pathToDb = path.join(distDir, "..", "data.db");
@@ -57,8 +53,8 @@ server.get(
   {
     schema: {
       params: Type.Object({ websiteId: Type.Integer() }),
-      querystring: EventsQuerystringSchema,
-      response: EventsReplySchema,
+      querystring: FeedEventsQuerystringSchema,
+      response: ApiFeedEventsReplySchema,
     },
   },
   (request, reply) => {

@@ -1,6 +1,10 @@
 {
   "extends": "@feed/typescript-config/nextjs.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/lib/*": ["lib/*"]
+    },
     "plugins": [
       {
         "name": "next"

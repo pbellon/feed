@@ -49,3 +49,53 @@ export const WebsiteSchema = Type.Object({
 });
 
 export type Website = Static<typeof WebsiteSchema>;
+
+/**
+ * Schema of querystring for API feed events endpoint, does not contain
+ * filtering by website which will be done by a route parameter
+ */
+export const FeedEventsQuerystringSchema = Type.Object({
+  status: Type.Optional(FeedEventStatusSchema),
+  type: Type.Optional(FeedEventTypeSchema),
+  startDate: Type.Optional(Type.String({ format: "date" })),
+  endDate: Type.Optional(Type.String({ format: "date" })),
+  page: Type.Optional(Type.Integer()),
+  pageSize: Type.Optional(Type.Integer()),
+});
+export type FeedEventsQuerystring = Static<typeof FeedEventsQuerystringSchema>;
+
+/**
+ * Common schema for pagination-specific data for paginated API endpoints
+ *
+ * @see FeedEventsReplySchema
+ */
+export const PaginationDataSchema = Type.Object({
+  page: Type.Integer(),
+  pageSize: Type.Integer(),
+  total: Type.Integer(),
+  nextPage: Type.Optional(Type.Integer()),
+});
+
+export type PaginationData = Static<typeof PaginationDataSchema>;
+
+/**
+ * Schema of a response from the feed events API endpoint looks like
+ */
+export const FeedEventsReplySchema = Type.Object({
+  pagination: PaginationDataSchema,
+  events: Type.Array(FeedEventSchema),
+});
+
+/**
+ * Type of a response from the feed events API endpoint looks like
+ */
+export type FeedEventsReply = Static<typeof FeedEventSchema>;
+
+/**
+ * How an error will look like on the server
+ */
+export const ApiErrorReplySchema = Type.Object({
+  code: Type.Number(),
+  reason: Type.String(),
+  message: Type.String(),
+});
