@@ -26,7 +26,6 @@ function createDbConnection(
 ): Sqlite3Database.Database {
   // If path to db exists, use that, else create a db in memory
   const file = options.pathToDb ? options.pathToDb : ":memory:";
-  console.log("file to use:", file);
   const betterSqlite3Opts = options.betterSqlite3Options ?? {};
   return new Sqlite3Database(file, betterSqlite3Opts);
 }

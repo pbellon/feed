@@ -3,42 +3,43 @@ import type {
   FeedEventsQuerystring,
   Website,
 } from "@feed/types";
+import { cache } from "react";
+import { constructSearchParams } from "./searchParams";
 
-class ApiClient {
-  baseUrl: string;
+const baseUrl = process.env.API_BASE_URL ?? "http://localhost:8080";
 
-  constructor() {
-    this.baseUrl = process.env.API_BASE_URL ?? "http://localhost:8080";
-  }
-  private url(path: string): string {
-    return `${this.baseUrl}${path}`;
-  }
-
-  async getWebsites(): Promise<Website[]> {
-    const req = await fetch(this.url("/websites"));
-    return (await req.json()) as Website[];
-  }
-
-  async getEvents(
-    websiteId: number,
-    query: FeedEventsQuerystring
-  ): Promise<FeedEventsReply> {
-    const params = new URLSearchParams({
-      page: query.page?.toString() ?? "",
-      pageSize: query.pageSize?.toString() ?? "",
-      type: query.type ?? "",
-      status: query.status ?? "",
-    });
-    const search = params.toString();
-    console.log({ search });
-    const url = this.url(`${websiteId}/events?${search}`);
-
-    const req = await fetch(url);
-    const data = (await req.json()) as FeedEventsReply;
-    return data;
-  }
+function url(path: string): string {
+  return `${baseUrl}${path}`;
 }
 
-const api = new ApiClient();
+export const getWebsites = cache(async (): Promise<Website[]> => {
+  const req = await fetch(url("/websites"));
+  return (await req.json()) as Website[];
+});
 
-export default api;
+export const getWebsite = cache(async (websiteId: number): Promise<Website> => {
+  "use cache";
+  const req = await fetch(url(`/websites/${websiteId}`));
+  return (await req.json()) as Website;
+});
+
+export async function getEvents(
+  websiteId: number | string,
+  query: FeedEventsQuerystring
+): Promise<FeedEventsReply> {
+  const searchQuery = constructSearchParams({
+    page: query.page?.toString(),
+    pageSize: query.pageSize?.toString(),
+    type: query.type,
+    status: query.status,
+  });
+
+  let fullUrl = url(`/websites/${websiteId}/events`);
+  if (searchQuery) {
+    fullUrl += `?${searchQuery}`;
+  }
+
+  const req = await fetch(fullUrl);
+  const data = (await req.json()) as FeedEventsReply;
+  return data;
+}

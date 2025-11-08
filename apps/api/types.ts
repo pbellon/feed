@@ -1,4 +1,4 @@
-import { Type, type Static } from "@fastify/type-provider-typebox";
+import { type Static } from "@fastify/type-provider-typebox";
 import { ApiErrorReplySchema, FeedEventsReplySchema } from "@feed/types";
 
 /**

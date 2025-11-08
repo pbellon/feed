@@ -2,14 +2,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import api from "../lib/api";
 
+import { getWebsites } from "@/lib/api";
 /**
  * Root server component dedicated to redirect to proper console route if
  * API returns websites
  */
 export default async function Home() {
-  const websites = await api.getWebsites();
+  const websites = await getWebsites();
 
   if (websites.length == 0) {
     return (

@@ -1,5 +1,10 @@
 import Skeleton from "@mui/material/Skeleton";
+import styles from "./NavBar.module.css";
 
 export function NavBarSkeleton() {
-  return <Skeleton animation="wave" />;
+  return (
+    <div className={styles.navbar}>
+      <Skeleton animation="wave" height="1.5rem" />;
+    </div>
+  );
 }

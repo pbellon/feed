@@ -1,4 +1,4 @@
-import { base } from "@feed/eslint-config";
+import { config } from "@feed/eslint-config/base";
 
 /** @type {import("eslint").Linter.Config[]} */
-export default base;
+export default config;

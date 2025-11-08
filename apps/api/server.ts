@@ -8,6 +8,7 @@ import {
   FeedEventTypeEnum,
   FeedEventsQuerystringSchema,
   type PaginationData,
+  ApiErrorReplySchema,
 } from "@feed/types";
 import Fastify from "fastify";
 import path from "node:path";
@@ -45,11 +46,39 @@ server.get(
     return websites;
   }
 );
+server.get(
+  "/websites/:websiteId",
+  {
+    schema: {
+      params: Type.Object({ websiteId: Type.Integer() }),
+      response: {
+        200: WebsiteSchema,
+        404: ApiErrorReplySchema,
+      },
+    },
+  },
+  (request, reply) => {
+    const { websiteId } = request.params;
+    const stmt = request.betterSqlite3.prepare(
+      "SELECT * FROM websites WHERE id = ?"
+    );
+    const res = stmt.get(websiteId) as Website | null;
+    if (!res) {
+      reply.code(404).send({
+        code: 404,
+        reason: "Resource not found",
+        message: `Website with '${websiteId}' id not found`,
+      });
+      return;
+    }
+    return res;
+  }
+);
 
 const DEFAULT_PAGE_SIZE = 10;
 
 server.get(
-  "/:websiteId/events",
+  "/websites/:websiteId/events",
   {
     schema: {
       params: Type.Object({ websiteId: Type.Integer() }),
