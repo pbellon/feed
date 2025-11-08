@@ -14,7 +14,7 @@ import Fastify from "fastify";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import fastifyBetterSqlite3Plugin from "./plugins/fastify-better-sqlite3.js";
-import { ApiFeedEventsReplySchema } from "./types.js";
+import { ApiFeedEventsReplySchema, ErrorCode } from "./types.js";
 
 const distDir = path.dirname(fileURLToPath(import.meta.url));
 const pathToDb = path.join(distDir, "..", "data.db");
@@ -35,7 +35,7 @@ server.get(
   },
   (request) => {
     const stmt = request.betterSqlite3.prepare("SELECT * FROM websites");
-    let websites: Website[] = [];
+    const websites: Website[] = [];
     stmt.all().forEach((rawRow) => {
       const row = rawRow as Record<string, string | number>;
       websites.push({
@@ -65,9 +65,9 @@ server.get(
     const res = stmt.get(websiteId) as Website | null;
     if (!res) {
       reply.code(404).send({
-        code: 404,
-        reason: "Resource not found",
+        code: ErrorCode.WEBSITE_NOT_FOUND,
         message: `Website with '${websiteId}' id not found`,
+        statusCode: 404,
       });
       return;
     }
@@ -98,8 +98,8 @@ server.get(
     const websiteId = request.params.websiteId;
 
     // Initialize filters
-    const filters: [string, any[]][] = [];
-    const params: any[] = [websiteId]; // Start with websiteId
+    const filters: [string, unknown[]][] = [];
+    const params: unknown[] = [websiteId]; // Start with websiteId
 
     // Add filters based on query parameters
     if (status) {
@@ -114,8 +114,8 @@ server.get(
       filters.push(["created_at BETWEEN ? AND ?", [startDate, endDate]]);
     } else if (startDate || endDate) {
       reply.code(400).send({
-        code: 400,
-        reason: "Bad request",
+        statusCode: 400,
+        code: ErrorCode.INVALID_EVENT_DATE_PARAMS,
         message: "Both startDate and endDate must be specified",
       });
       return;
@@ -132,13 +132,14 @@ server.get(
 
     // Final query with JOIN to include user details
     const query = `
-      SELECT events.id, events.event_status AS status, 
+      SELECT events.id, events.event_status AS status, events.description,
         events.created_at AS createdAt, events.updated_at as updatedAt,
         events.information, events.event_type AS type, 
         users.id AS userId, users.fullname AS userFullName
       FROM events
       JOIN users ON events.user_id = users.id
       WHERE website_id = ? ${whereClause ? `AND ${whereClause}` : ""}
+      ORDER BY events.created_at DESC
       ${paginationQuery}
     `;
 
@@ -148,6 +149,7 @@ server.get(
       id: number;
       status: string;
       type: string;
+      description: string;
       createdAt: string;
       updatedAt: string | null;
       information: string | null;
@@ -176,6 +178,7 @@ server.get(
     const events: FeedEvent[] = rows.map((row) => {
       const res: FeedEvent = {
         id: row.id,
+        description: row.description,
         status: row.status as FeedEventStatusEnum,
         createdAt: row.createdAt,
         type: row.type as FeedEventTypeEnum,

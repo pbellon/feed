@@ -35,10 +35,11 @@ export const FeedEventSchema = Type.Object({
   id: Type.Integer(),
   createdAt: Type.String({ format: "date-time" }),
   updatedAt: Type.Optional(Type.String({ format: "date-time" })),
+  description: Type.String(),
   user: UserSchema,
   status: FeedEventStatusSchema,
   type: FeedEventTypeSchema,
-  information: Type.Any(),
+  information: Type.Optional(Type.Any()),
 });
 
 export type FeedEvent = Static<typeof FeedEventSchema>;
@@ -89,13 +90,15 @@ export const FeedEventsReplySchema = Type.Object({
 /**
  * Type of a response from the feed events API endpoint looks like
  */
-export type FeedEventsReply = Static<typeof FeedEventSchema>;
+export type FeedEventsReply = Static<typeof FeedEventsReplySchema>;
 
 /**
  * How an error will look like on the server
  */
 export const ApiErrorReplySchema = Type.Object({
-  code: Type.Number(),
-  reason: Type.String(),
+  code: Type.String(),
   message: Type.String(),
+  statusCode: Type.Number(),
 });
+
+export type ApiErrorReply = Static<typeof ApiErrorReplySchema>;

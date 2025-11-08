@@ -1,5 +1,9 @@
-import { type Static } from "@fastify/type-provider-typebox";
 import { ApiErrorReplySchema, FeedEventsReplySchema } from "@feed/types";
+
+export enum ErrorCode {
+  WEBSITE_NOT_FOUND = "WEBSITE_NOT_FOUND",
+  INVALID_EVENT_DATE_PARAMS = "INVALID_EVENT_DATE_PARAMS",
+}
 
 /**
  * Schema for the whole responses of feed events schema
@@ -9,5 +13,3 @@ export const ApiFeedEventsReplySchema = {
   "4xx": ApiErrorReplySchema,
   "5xx": ApiErrorReplySchema,
 };
-
-export type ApiFeedEventsReply = Static<typeof ApiFeedEventsReplySchema>;

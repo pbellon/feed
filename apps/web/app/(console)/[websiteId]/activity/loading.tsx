@@ -27,9 +27,7 @@ export default function Loading() {
     <TableContainer component={Paper}>
       <Table>
         <TableBody>
-          <TableRow>
-            <SkeletonTableRows nbRows={10} />
-          </TableRow>
+          <SkeletonTableRows nbRows={10} />
         </TableBody>
       </Table>
     </TableContainer>

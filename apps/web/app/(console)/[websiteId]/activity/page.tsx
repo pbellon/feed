@@ -4,6 +4,8 @@ import styles from "./page.module.css";
 import { metadataGenerator } from "@/lib/metadata";
 import { parseEventSearchParams } from "@/lib/searchParams";
 import { getEvents } from "@/lib/api";
+import TableContainer from "@mui/material/TableContainer";
+import { FeedTable } from "./FeedTable";
 
 export const generateMetadata = metadataGenerator("Activity feed");
 
@@ -20,5 +22,9 @@ export default async function ActivityPage({
 
   console.log(data);
 
-  return <Paper className={styles.holder}>Todo</Paper>;
+  return (
+    <TableContainer component={Paper}>
+      <FeedTable data={data} />
+    </TableContainer>
+  );
 }
