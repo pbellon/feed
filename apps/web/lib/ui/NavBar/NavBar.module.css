@@ -4,11 +4,3 @@
   border-bottom: 2px solid var(--main-border-color);
   padding-bottom: 1rem;
 }
-
-.link {
-  color: var(--link-color);
-
-  &.active {
-    color: var(--link-color--active);
-  }
-}

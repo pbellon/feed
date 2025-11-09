@@ -1,17 +1,27 @@
 "use client";
 
-import { Website } from "@feed/types";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useParams, usePathname, useRouter } from "next/navigation";
-import { useCallback, useMemo, useState, useTransition } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from "react";
 
 import styles from "./WebsiteSelector.module.css";
+import { Website } from "@feed/types";
 
-export function WebsiteSelector({ websites }: { websites: Website[] }) {
+type WebsiteSelectorProps = {
+  websites: Website[];
+  websiteId: string;
+};
+
+export function WebsiteSelector({ websiteId, websites }: WebsiteSelectorProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const { websiteId } = useParams<{ websiteId: string }>();
 
   const [currentWebsiteId, setCurrentWebsiteId] = useState(websiteId);
 
@@ -25,13 +35,16 @@ export function WebsiteSelector({ websites }: { websites: Website[] }) {
     (e: SelectChangeEvent): void => {
       setCurrentWebsiteId(e.target.value);
       startTransition(() => {
-        // update cookie
-        document.cookie = `lastWebsiteId=${e.target.value}; Path=/; Max-Age=7776000`;
         router.push(`/${e.target.value}/${subPath}`);
       });
     },
     [router, subPath]
   );
+
+  // sync outside `websiteId` props with locally selected website
+  useEffect(() => {
+    setCurrentWebsiteId(websiteId);
+  }, [websiteId]);
 
   return (
     <Select

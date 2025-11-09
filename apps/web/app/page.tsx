@@ -4,11 +4,23 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { getWebsites } from "@/lib/api";
+import { Suspense } from "react";
+import { CircularProgress } from "@mui/material";
+
+function LoadingPlaceholder() {
+  return (
+    <Box sx={{ display: "flex" }}>
+      <CircularProgress />
+    </Box>
+  );
+}
+
 /**
- * Root server component dedicated to redirect to proper console route if
- * API returns websites
+ * Actual component doing fetch & redirect logic that can be wrapped in
+ * Suspense. This is done to simplify build process.
+ *
  */
-export default async function Home() {
+async function HomeContent() {
   const websites = await getWebsites();
 
   if (websites.length == 0) {
@@ -24,17 +36,17 @@ export default async function Home() {
     );
   }
 
-  const last = (await cookies()).get("lastWebsiteId")?.value;
-  const firstWebsite = websites[0]!; // safe use of ! because of previous length check
-  let website = firstWebsite;
-
-  // will try to find website from ID stored in cookie
-  if (last) {
-    // default to first website if not found
-    website =
-      websites.find((website) => website.id.toString() === last) ??
-      firstWebsite;
-  }
-
-  return redirect(`/${website.id}/activity`);
+  // safe use of ! because of previous length check
+  return redirect(`/${websites[0]!.id}/activity`);
+}
+/**
+ * Root server component dedicated to redirect to proper console route if
+ * API returns websites
+ */
+export default async function Home() {
+  return (
+    <Suspense fallback={<LoadingPlaceholder />}>
+      <HomeContent />
+    </Suspense>
+  );
 }

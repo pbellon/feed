@@ -5,6 +5,8 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ReactQueryProvider from "./ReactQueryProvider";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -27,7 +29,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.variable}>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          <ThemeProvider theme={theme}>
+            <ReactQueryProvider>{children}</ReactQueryProvider>
+          </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
