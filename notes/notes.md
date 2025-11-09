@@ -5,6 +5,9 @@
 - Filter bar
   - filter by date range
   - button "clear filters"
+- Fix browser "back" / "next" history. Probably useEffect in FeedProvider
+
+- polish naming & structure
 
 # Plan
 

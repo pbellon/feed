@@ -44,6 +44,7 @@ export function FeedStatusFilter({
   return (
     <Autocomplete
       sx={sx}
+      size="small"
       options={options}
       value={selectedValue}
       onChange={handleChange}
