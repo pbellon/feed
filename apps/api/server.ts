@@ -4,11 +4,12 @@ import {
   WebsiteSchema,
   type FeedEvent,
   type Website,
-  FeedEventStatusEnum,
-  FeedEventTypeEnum,
-  FeedEventsQuerystringSchema,
+  FeedEventStatus,
+  FeedEventType,
+  FeedEventsQuerySchema,
   type PaginationData,
   ApiErrorReplySchema,
+  FeedEventSubject,
 } from "@feed/types";
 import Fastify from "fastify";
 import path from "node:path";
@@ -82,7 +83,7 @@ server.get(
   {
     schema: {
       params: Type.Object({ websiteId: Type.Integer() }),
-      querystring: FeedEventsQuerystringSchema,
+      querystring: FeedEventsQuerySchema,
       response: ApiFeedEventsReplySchema,
     },
   },
@@ -133,9 +134,10 @@ server.get(
     // Final query with JOIN to include user details
     const query = `
       SELECT events.id, events.event_status AS status, events.description,
-        events.created_at AS createdAt, events.updated_at as updatedAt,
-        events.information, events.event_type AS type, 
-        users.id AS userId, users.fullname AS userFullName
+        events.event_subject as subject, events.created_at AS createdAt, 
+        events.updated_at as updatedAt, events.information,
+        events.event_type AS type, users.id AS userId,
+        users.fullname AS userFullName
       FROM events
       JOIN users ON events.user_id = users.id
       WHERE website_id = ? ${whereClause ? `AND ${whereClause}` : ""}
@@ -150,6 +152,7 @@ server.get(
       status: string;
       type: string;
       description: string;
+      subject: string;
       createdAt: string;
       updatedAt: string | null;
       information: string | null;
@@ -179,9 +182,10 @@ server.get(
       const res: FeedEvent = {
         id: row.id,
         description: row.description,
-        status: row.status as FeedEventStatusEnum,
+        status: row.status as FeedEventStatus,
         createdAt: row.createdAt,
-        type: row.type as FeedEventTypeEnum,
+        type: row.type as FeedEventType,
+        subject: row.subject as FeedEventSubject,
         information: row.information ? JSON.parse(row.information) : undefined,
         user: {
           id: row.userId,

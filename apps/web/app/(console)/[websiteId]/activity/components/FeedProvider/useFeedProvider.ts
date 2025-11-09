@@ -1,3 +1,5 @@
+"use client";
+
 import { use } from "react";
 import { FeedProviderContext } from "./FeedProvider";
 import { FeedProviderContextState } from "./types";

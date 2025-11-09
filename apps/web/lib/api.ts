@@ -1,9 +1,11 @@
-import type {
-  FeedEventsReply,
-  FeedEventsQuerystring,
-  Website,
-} from "@feed/types";
+import type { FeedEventsReply, FeedEventsQuery, Website } from "@feed/types";
 import { constructSearchParams } from "./searchParams";
+
+function delay(wait: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, wait);
+  });
+}
 
 const baseUrl = process.env.API_BASE_URL ?? "http://localhost:8080";
 
@@ -23,7 +25,7 @@ export async function getWebsite(websiteId: number): Promise<Website> {
 
 export async function getEvents(
   websiteId: number | string,
-  query: FeedEventsQuerystring
+  query: FeedEventsQuery
 ): Promise<FeedEventsReply> {
   const searchQuery = constructSearchParams({
     page: query.page?.toString(),
@@ -38,6 +40,7 @@ export async function getEvents(
   }
 
   const req = await fetch(fullUrl);
+  await delay(1000);
   const data = (await req.json()) as FeedEventsReply;
   return data;
 }

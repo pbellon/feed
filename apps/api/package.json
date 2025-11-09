@@ -15,11 +15,10 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@fastify/type-provider-typebox": "^6.1.0",
-    "better-sqlite3": "^12.4.1",
-    "fastify": "^5.6.1",
-    "fastify-plugin": "^5.1.0",
-    "postgrator": "^8.0.0"
+    "@fastify/type-provider-typebox": "6.1.0",
+    "better-sqlite3": "12.4.1",
+    "fastify": "5.6.1",
+    "fastify-plugin": "5.1.0"
   },
   "devDependencies": {
     "@feed/eslint-config": "workspace:*",

@@ -1,7 +1,10 @@
 :root {
   --background: #f9f9fb;
+
   --main-background: #fff;
   --main-border-color: #f1f1f1;
+
+  --secondary-background: #f2f2f2;
 
   --link-color: #0e2f59;
   --link-color--active: #a4a4a4;

@@ -1,8 +1,8 @@
-import { FeedEventStatusEnum, FeedEventTypeEnum } from "@feed/types";
+import { FeedEventStatus, FeedEventType } from "@feed/types";
 
 export type FeedProviderFilters = {
-  type: FeedEventTypeEnum | "";
-  status: FeedEventStatusEnum | "";
+  type: FeedEventType | "";
+  status: FeedEventStatus | "";
   startDate: string | "";
   endDate: string | "";
 };
@@ -20,8 +20,8 @@ export type FeedProviderState = {
 export type FeedProviderCallbacks = {
   resetFilters: () => void;
 
-  setType: (type: FeedEventTypeEnum) => void;
-  setStatus: (status: FeedEventStatusEnum) => void;
+  setType: (type: FeedEventType | "") => void;
+  setStatus: (status: FeedEventStatus | "") => void;
 
   setDateRange: (startDate: string, endDate: string) => void;
 
@@ -50,12 +50,12 @@ type ResetFiltersAction = {
 
 type SetTypeAction = {
   type: FeedProviderActionKind.SET_TYPE;
-  payload: FeedEventTypeEnum | "";
+  payload: FeedEventType | "";
 };
 
 type SetStatusAction = {
   type: FeedProviderActionKind.SET_STATUS;
-  payload: FeedEventStatusEnum | "";
+  payload: FeedEventStatus | "";
 };
 
 type SetDateRangeAction = {

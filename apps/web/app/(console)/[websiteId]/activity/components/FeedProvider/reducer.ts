@@ -2,8 +2,16 @@ import { act, Reducer } from "react";
 import {
   FeedProviderAction,
   FeedProviderActionKind,
+  FeedProviderPagination,
   FeedProviderState,
 } from "./types";
+
+function resetPage(pagination: FeedProviderPagination): FeedProviderPagination {
+  return {
+    pageSize: pagination.pageSize,
+    page: 0,
+  };
+}
 
 export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
   state,
@@ -12,7 +20,7 @@ export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
   switch (action.type) {
     case FeedProviderActionKind.RESET_FILTERS: {
       return {
-        ...state,
+        pagination: resetPage(state.pagination),
         filters: {
           status: "",
           type: "",
@@ -23,7 +31,7 @@ export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
     }
     case FeedProviderActionKind.SET_DATE_RANGE: {
       return {
-        ...state,
+        pagination: resetPage(state.pagination),
         filters: {
           ...state.filters,
           startDate: action.payload.start ?? "",
@@ -33,7 +41,7 @@ export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
     }
     case FeedProviderActionKind.SET_STATUS: {
       return {
-        ...state,
+        pagination: resetPage(state.pagination),
         filters: {
           ...state.filters,
           status: action.payload,
@@ -42,7 +50,7 @@ export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
     }
     case FeedProviderActionKind.SET_TYPE: {
       return {
-        ...state,
+        pagination: resetPage(state.pagination),
         filters: {
           ...state.filters,
           type: action.payload,
@@ -62,7 +70,7 @@ export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
       return {
         ...state,
         pagination: {
-          ...state.pagination,
+          page: 0,
           pageSize: action.payload,
         },
       };

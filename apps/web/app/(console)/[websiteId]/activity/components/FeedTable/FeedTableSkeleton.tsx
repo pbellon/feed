@@ -1,7 +1,8 @@
-import { Skeleton, TableBody, TableCell, TableRow } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import TableContainer from "@mui/material/TableContainer";
-import Table from "node_modules/@mui/material/Table";
+import { Skeleton } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 
 function SkeletonTableRows({ nbRows }: { nbRows: number }) {
   return [...Array(nbRows)].map((_, index) => (
@@ -22,14 +23,12 @@ function SkeletonTableRows({ nbRows }: { nbRows: number }) {
   ));
 }
 
-export default function Loading() {
+export function FeedTableSkeleton() {
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableBody>
-          <SkeletonTableRows nbRows={10} />
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Table>
+      <TableBody>
+        <SkeletonTableRows nbRows={10} />
+      </TableBody>
+    </Table>
   );
 }

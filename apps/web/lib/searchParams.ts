@@ -1,16 +1,31 @@
-import { FeedEventsQuerystring } from "@feed/types";
-import { RawSearchParams } from "./types";
+import { FeedEventsQuery, FeedEventStatus, FeedEventType } from "@feed/types";
 
-function parseString(param: string | string[] | undefined): string | undefined {
-  if (param && typeof param == "string") {
+import { ReadonlyURLSearchParams } from "next/navigation";
+
+function parseString(param: string | null): string | undefined {
+  if (param) {
     return param;
   }
   return undefined;
 }
 
-function parsePositiveInt(
-  param: string | string[] | undefined
-): number | undefined {
+function parseEventStatus(param: string | null): FeedEventStatus | undefined {
+  const upper = param?.toUpperCase();
+  if (upper && upper in FeedEventStatus) {
+    return upper as FeedEventStatus;
+  }
+  return undefined;
+}
+
+function parseEventType(param: string | null): FeedEventType | undefined {
+  const upper = param?.toUpperCase();
+  if (upper && upper in FeedEventType) {
+    return upper as FeedEventType;
+  }
+  return undefined;
+}
+
+function parsePositiveInt(param: string | null): number | undefined {
   if (param && typeof param === "string") {
     const nb = parseInt(param, 10);
     if (!isNaN(nb) && nb >= 0) {
@@ -21,14 +36,16 @@ function parsePositiveInt(
 }
 
 export function parseEventSearchParams(
-  params: RawSearchParams
-): FeedEventsQuerystring {
-  const query: FeedEventsQuerystring = {};
+  params: ReadonlyURLSearchParams
+): FeedEventsQuery {
+  const query: FeedEventsQuery = {};
 
-  query.startDate = parseString(params["startDate"]);
-  query.endDate = parseString(params["endDate"]);
-  query.page = parsePositiveInt(params["page"]);
-  query.pageSize = parsePositiveInt(params["pageSize"]);
+  query.startDate = parseString(params.get("startDate"));
+  query.endDate = parseString(params.get("endDate"));
+  query.status = parseEventStatus(params.get("status"));
+  query.type = parseEventType(params.get("type"));
+  query.page = parsePositiveInt(params.get("page"));
+  query.pageSize = parsePositiveInt(params.get("pageSize"));
 
   return query;
 }

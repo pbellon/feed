@@ -10,8 +10,5 @@
   "keywords": [],
   "author": "",
   "type": "module",
-  "license": "ISC",
-  "dependencies": {
-    "typebox": "^1.0.51"
-  }
+  "license": "ISC"
 }

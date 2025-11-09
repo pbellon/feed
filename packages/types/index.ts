@@ -6,7 +6,7 @@ export const UserSchema = Type.Object({
 });
 export type User = Static<typeof UserSchema>;
 
-export enum FeedEventTypeEnum {
+export enum FeedEventType {
   ADD = "ADD",
   CREATE = "CREATE",
   DELETE = "DELETE",
@@ -21,15 +21,28 @@ export enum FeedEventTypeEnum {
   UPDATE = "UPDATE",
   UPLOAD = "UPLOAD",
 }
-export const FeedEventTypeSchema = Type.Enum(FeedEventTypeEnum);
+export const FeedEventTypeSchema = Type.Enum(FeedEventType);
 
-export enum FeedEventStatusEnum {
+export enum FeedEventStatus {
   COMPLETED = "COMPLETED",
   FAILED = "FAILED",
   IN_PROGRESS = "IN_PROGRESS",
 }
+export const FeedEventStatusSchema = Type.Enum(FeedEventStatus);
 
-export const FeedEventStatusSchema = Type.Enum(FeedEventStatusEnum);
+export enum FeedEventSubject {
+  APPLICATION = "APPLICATION",
+  CACHE = "CACHE",
+  CERTIFICATE = "CERTIFICATE",
+  CONFIG = "CONFIG",
+  DNS = "DNS",
+  JOB = "JOB",
+  OPTIMIZATION = "OPTIMIZATION",
+  PLUG = "PLUG",
+  TARGET = "TARGET",
+  USER = "USER",
+}
+export const FeedEventSubjectSchema = Type.Enum(FeedEventSubject);
 
 export const FeedEventSchema = Type.Object({
   id: Type.Integer(),
@@ -38,6 +51,7 @@ export const FeedEventSchema = Type.Object({
   description: Type.String(),
   user: UserSchema,
   status: FeedEventStatusSchema,
+  subject: FeedEventSubjectSchema,
   type: FeedEventTypeSchema,
   information: Type.Optional(Type.Any()),
 });
@@ -55,7 +69,7 @@ export type Website = Static<typeof WebsiteSchema>;
  * Schema of querystring for API feed events endpoint, does not contain
  * filtering by website which will be done by a route parameter
  */
-export const FeedEventsQuerystringSchema = Type.Object({
+export const FeedEventsQuerySchema = Type.Object({
   status: Type.Optional(FeedEventStatusSchema),
   type: Type.Optional(FeedEventTypeSchema),
   startDate: Type.Optional(Type.String({ format: "date" })),
@@ -63,7 +77,7 @@ export const FeedEventsQuerystringSchema = Type.Object({
   page: Type.Optional(Type.Integer()),
   pageSize: Type.Optional(Type.Integer()),
 });
-export type FeedEventsQuerystring = Static<typeof FeedEventsQuerystringSchema>;
+export type FeedEventsQuery = Static<typeof FeedEventsQuerySchema>;
 
 /**
  * Common schema for pagination-specific data for paginated API endpoints

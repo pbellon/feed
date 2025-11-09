@@ -1,27 +1,26 @@
 import Paper from "@mui/material/Paper";
 
 import { metadataGenerator } from "@/lib/metadata";
-import { parseEventSearchParams } from "@/lib/searchParams";
-import { getEvents } from "@/lib/api";
 import TableContainer from "@mui/material/TableContainer";
-import { FeedTable } from "./FeedTable";
+import { FeedTable } from "./components/FeedTable/FeedTable";
+import FeedProvider from "./components/FeedProvider";
+import FeedFilterBar from "./components/FeedFilterBar";
 
 export const generateMetadata = metadataGenerator("Activity feed");
 
 export default async function ActivityPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ websiteId: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { websiteId } = await params;
-  const queryString = await searchParams;
-  const data = await getEvents(websiteId, parseEventSearchParams(queryString));
 
   return (
-    <TableContainer component={Paper}>
-      <FeedTable data={data} />
-    </TableContainer>
+    <FeedProvider>
+      <FeedFilterBar />
+      <TableContainer component={Paper}>
+        <FeedTable websiteId={websiteId} />
+      </TableContainer>
+    </FeedProvider>
   );
 }
