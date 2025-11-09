@@ -1,12 +1,14 @@
 # TODO
 
-- Affichage listing
-  - affichage user
+- affichage user dans le listing
 - Filter bar
   - filter by date range
   - button "clear filters"
 - Fix browser "back" / "next" history. Probably useEffect in FeedProvider
-
+- Optimization là où c'est possible
+  - bundle
+  - external resources loading
+  - ??
 - polish naming & structure
 
 # Plan
