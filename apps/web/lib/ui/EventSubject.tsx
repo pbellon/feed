@@ -11,8 +11,8 @@ import ExtensionIcon from "@mui/icons-material/Extension";
 import AdjustIcon from "@mui/icons-material/Adjust";
 import PersonIcon from "@mui/icons-material/Person";
 
-export function eventSubjectAsText(type: FeedEventSubject): string {
-  switch (type) {
+export function EventSubjectText({ subject }: { subject: FeedEventSubject }) {
+  switch (subject) {
     case FeedEventSubject.APPLICATION:
       return "Application";
     case FeedEventSubject.CACHE:
@@ -36,7 +36,7 @@ export function eventSubjectAsText(type: FeedEventSubject): string {
   }
 }
 
-export function eventSubjectAsIcon(subject: FeedEventSubject) {
+export function EventSubjectIcon({ subject }: { subject: FeedEventSubject }) {
   switch (subject) {
     case FeedEventSubject.APPLICATION:
       return <CloudIcon />;

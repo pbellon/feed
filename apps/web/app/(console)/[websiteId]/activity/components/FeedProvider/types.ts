@@ -1,7 +1,7 @@
-import { FeedEventStatus, FeedEventType } from "@feed/types";
+import { FeedEventStatus, FeedEventSubject } from "@feed/types";
 
 export type FeedProviderFilters = {
-  type: FeedEventType | "";
+  subject: FeedEventSubject | "";
   status: FeedEventStatus | "";
   startDate: string | "";
   endDate: string | "";
@@ -20,8 +20,8 @@ export type FeedProviderState = {
 export type FeedProviderCallbacks = {
   resetFilters: () => void;
 
-  setType: (type: FeedEventType | "") => void;
   setStatus: (status: FeedEventStatus | "") => void;
+  setSubject: (subject: FeedEventSubject | "") => void;
 
   setDateRange: (startDate: string, endDate: string) => void;
 
@@ -35,7 +35,7 @@ export type FeedProviderContextState = FeedProviderState &
 export enum FeedProviderActionKind {
   // filters related actions
   RESET_FILTERS = "RESET_FILTERS",
-  SET_TYPE = "SET_TYPE",
+  SET_SUBJECT = "SET_SUBJECT",
   SET_STATUS = "SET_STATUS",
   SET_DATE_RANGE = "SET_DATE_RANGE",
 
@@ -48,9 +48,9 @@ type ResetFiltersAction = {
   type: FeedProviderActionKind.RESET_FILTERS;
 };
 
-type SetTypeAction = {
-  type: FeedProviderActionKind.SET_TYPE;
-  payload: FeedEventType | "";
+type SetSubjectAction = {
+  type: FeedProviderActionKind.SET_SUBJECT;
+  payload: FeedEventSubject | "";
 };
 
 type SetStatusAction = {
@@ -78,7 +78,7 @@ type SetPageSizeAction = {
 
 export type FeedProviderAction =
   | ResetFiltersAction
-  | SetTypeAction
+  | SetSubjectAction
   | SetStatusAction
   | SetDateRangeAction
   | SetPageAction

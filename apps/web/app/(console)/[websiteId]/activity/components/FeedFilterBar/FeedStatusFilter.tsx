@@ -1,22 +1,24 @@
-import { eventStatusAsText } from "@/lib/eventStatus";
+import { EventStatusChip, EventStatusText } from "@/lib/ui/EventStatus";
 import { FeedEventStatus } from "@feed/types";
+import { MenuItem } from "@mui/material";
 import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { SyntheticEvent, useCallback, useMemo } from "react";
 
-type Option = {
+type StatusOption = {
   label: string;
   status: FeedEventStatus;
 };
 
 type FeedStatusFilterProps = {
-  sx?: AutocompleteProps<Option, false, false, false>["sx"];
+  sx?: AutocompleteProps<StatusOption, false, false, false>["sx"];
   value: FeedEventStatus | "";
   onChange: (value: FeedEventStatus | "") => void;
 };
 
 const options = Object.values(FeedEventStatus).map((value) => ({
-  label: eventStatusAsText(value),
+  label: EventStatusText({ status: value }),
   status: value,
 }));
 

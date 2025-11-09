@@ -1,4 +1,8 @@
-import { FeedEventsQuery, FeedEventStatus, FeedEventType } from "@feed/types";
+import {
+  FeedEventsQuery,
+  FeedEventStatus,
+  FeedEventSubject,
+} from "@feed/types";
 
 import { ReadonlyURLSearchParams } from "next/navigation";
 
@@ -17,10 +21,10 @@ function parseEventStatus(param: string | null): FeedEventStatus | undefined {
   return undefined;
 }
 
-function parseEventType(param: string | null): FeedEventType | undefined {
+function parseEventSubject(param: string | null): FeedEventSubject | undefined {
   const upper = param?.toUpperCase();
-  if (upper && upper in FeedEventType) {
-    return upper as FeedEventType;
+  if (upper && upper in FeedEventSubject) {
+    return upper as FeedEventSubject;
   }
   return undefined;
 }
@@ -43,7 +47,7 @@ export function parseEventSearchParams(
   query.startDate = parseString(params.get("startDate"));
   query.endDate = parseString(params.get("endDate"));
   query.status = parseEventStatus(params.get("status"));
-  query.type = parseEventType(params.get("type"));
+  query.subject = parseEventSubject(params.get("subject"));
   query.page = parsePositiveInt(params.get("page"));
   query.pageSize = parsePositiveInt(params.get("pageSize"));
 

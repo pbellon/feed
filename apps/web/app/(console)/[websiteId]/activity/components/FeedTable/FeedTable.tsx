@@ -6,6 +6,7 @@ import {
   TableFooter,
   TablePagination,
   TableRow,
+  Typography,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableCell from "node_modules/@mui/material/TableCell";
@@ -14,6 +15,9 @@ import { useFeedQuery } from "../../hooks/useFeedQuery";
 import { FeedTableSkeleton } from "./FeedTableSkeleton";
 import { useCallback } from "react";
 import { FeedSubjectCellContent } from "./FeedSubjectCellContent";
+import Box from "node_modules/@mui/material/Box";
+import { FeedDateCellContent } from "./FeedDateCellContent";
+import { EventStatusChip } from "@/lib/ui/EventStatus";
 
 type FeedTableProps = {
   websiteId: string;
@@ -22,10 +26,14 @@ type FeedTableProps = {
 function FeedEventTableRow({ event }: Readonly<{ event: FeedEvent }>) {
   return (
     <TableRow>
-      {/* TODO: parse date with date-fns */}
-      <TableCell>{event.createdAt}</TableCell>
-      {/* */}
-      <TableCell>{event.status}</TableCell>
+      <TableCell>
+        <FeedDateCellContent date={event.createdAt} />
+      </TableCell>
+      <TableCell>
+        <Box sx={{ display: "flex", justifyContent: "stretch" }}>
+          <EventStatusChip sx={{ flexGrow: 1 }} status={event.status} />
+        </Box>
+      </TableCell>
       <TableCell>
         <FeedSubjectCellContent
           subject={event.subject}
@@ -62,6 +70,15 @@ export function FeedTable({ websiteId }: FeedTableProps) {
 
   if (!data && isLoading) {
     return <FeedTableSkeleton />;
+  }
+
+  if (!isLoading && !isFetching && (data?.events ?? []).length == 0) {
+    return (
+      <Box sx={{ padding: "calc(var(--mui-spacing) * 2)" }}>
+        <Typography variant="h4">No events found</Typography>
+        <Typography>Please remove some filters</Typography>
+      </Box>
+    );
   }
 
   return (

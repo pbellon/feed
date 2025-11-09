@@ -1,6 +1,6 @@
 "use client";
 
-import { FeedEventStatus, FeedEventType } from "@feed/types";
+import { FeedEventStatus, FeedEventSubject, FeedEventType } from "@feed/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   createContext,
@@ -32,10 +32,11 @@ export function FeedProvider({ children }: FeedProviderProps) {
 
   const [initialState] = useState((): FeedProviderState => {
     const query = parseEventSearchParams(sp);
+    console.log("initial state: ", query);
     return {
       filters: {
         status: query.status ?? "",
-        type: query.type ?? "",
+        subject: query.subject ?? "",
         startDate: query.startDate ?? "",
         endDate: query.endDate ?? "",
       },
@@ -55,9 +56,9 @@ export function FeedProvider({ children }: FeedProviderProps) {
     });
   }, []);
 
-  const setType = useCallback((type: FeedEventType | "") => {
+  const setSubject = useCallback((type: FeedEventSubject | "") => {
     dispatch({
-      type: FeedProviderActionKind.SET_TYPE,
+      type: FeedProviderActionKind.SET_SUBJECT,
       payload: type,
     });
   }, []);
@@ -97,7 +98,7 @@ export function FeedProvider({ children }: FeedProviderProps) {
       filters: state.filters,
       pagination: state.pagination,
       setStatus,
-      setType,
+      setSubject,
       setDateRange,
       setPage,
       setPageSize,
@@ -109,7 +110,7 @@ export function FeedProvider({ children }: FeedProviderProps) {
       setPage,
       setPageSize,
       setStatus,
-      setType,
+      setSubject,
       state.filters,
       state.pagination,
     ]
@@ -120,7 +121,7 @@ export function FeedProvider({ children }: FeedProviderProps) {
 
     // filtres
     if (state.filters.status) s.set("status", state.filters.status);
-    if (state.filters.type) s.set("type", state.filters.type);
+    if (state.filters.subject) s.set("subject", state.filters.subject);
     if (state.filters.startDate) s.set("startDate", state.filters.startDate);
     if (state.filters.endDate) s.set("endDate", state.filters.endDate);
 
@@ -136,7 +137,7 @@ export function FeedProvider({ children }: FeedProviderProps) {
     const next = buildSearchParams();
     const curr = sp.toString();
     if (next !== curr) {
-      router.replace(`?${next}`, { scroll: false });
+      router.push(`?${next}`, { scroll: false });
     }
   }, [buildSearchParams, router, sp]);
 

@@ -1,4 +1,4 @@
-import { eventSubjectAsIcon, eventSubjectAsText } from "@/lib/eventSubject";
+import { EventSubjectIcon, EventSubjectText } from "@/lib/ui/EventSubject";
 import { FeedEventSubject } from "@feed/types";
 import { Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
@@ -14,14 +14,19 @@ export function FeedSubjectCellContent({
   description,
 }: FeedSubjectCellContentProps) {
   return (
-    <Grid container spacing={1}>
-      <Grid size={2}>
-        <Avatar>{eventSubjectAsIcon(subject)}</Avatar>
+    <Grid container spacing={2}>
+      <Grid
+        size={2}
+        sx={{ display: "flex", alignItems: "center", justifyContent: "right" }}
+      >
+        <Avatar>
+          <EventSubjectIcon subject={subject} />
+        </Avatar>
       </Grid>
       <Grid size={10}>
         <Stack direction="column">
           <Typography sx={{ fontWeight: "800" }}>
-            {eventSubjectAsText(subject)}
+            <EventSubjectText subject={subject} />
           </Typography>
           <Typography>{description}</Typography>
         </Stack>

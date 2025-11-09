@@ -30,7 +30,9 @@ export async function getEvents(
   const searchQuery = constructSearchParams({
     page: query.page?.toString(),
     pageSize: query.pageSize?.toString(),
-    type: query.type,
+    subject: query.subject,
+    startDate: query.startDate,
+    endDate: query.endDate,
     status: query.status,
   });
 

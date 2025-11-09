@@ -1,4 +1,4 @@
-import { eventSubjectAsText } from "@/lib/eventSubject";
+import { EventSubjectText } from "@/lib/ui/EventSubject";
 import { FeedEventSubject } from "@feed/types";
 import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -17,12 +17,12 @@ type FeedStatusFilterProps = {
 
 const options = Object.values(FeedEventSubject).map(
   (value): Option => ({
-    label: eventSubjectAsText(value),
+    label: EventSubjectText({ subject: value }),
     subject: value,
   })
 );
 
-export function FeedStatusFilter({
+export function FeedSubjectFilter({
   sx,
   value,
   onChange,
@@ -44,7 +44,7 @@ export function FeedStatusFilter({
       options={options}
       value={selectedValue}
       onChange={handleChange}
-      renderInput={(params) => <TextField {...params} label="Status" />}
+      renderInput={(params) => <TextField {...params} label="Subject" />}
     />
   );
 }

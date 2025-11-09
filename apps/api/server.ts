@@ -94,7 +94,7 @@ server.get(
       pageSize = DEFAULT_PAGE_SIZE,
       endDate,
       startDate,
-      type,
+      subject,
     } = request.query;
     const websiteId = request.params.websiteId;
 
@@ -107,8 +107,8 @@ server.get(
       filters.push(["event_status = ?", [status]]);
     }
 
-    if (type) {
-      filters.push(["event_type = ?", [type]]);
+    if (subject) {
+      filters.push(["event_subject = ?", [subject]]);
     }
 
     if (startDate && endDate) {

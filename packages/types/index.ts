@@ -71,7 +71,7 @@ export type Website = Static<typeof WebsiteSchema>;
  */
 export const FeedEventsQuerySchema = Type.Object({
   status: Type.Optional(FeedEventStatusSchema),
-  type: Type.Optional(FeedEventTypeSchema),
+  subject: Type.Optional(FeedEventSubjectSchema),
   startDate: Type.Optional(Type.String({ format: "date" })),
   endDate: Type.Optional(Type.String({ format: "date" })),
   page: Type.Optional(Type.Integer()),

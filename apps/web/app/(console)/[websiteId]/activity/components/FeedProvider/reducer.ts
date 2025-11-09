@@ -23,7 +23,7 @@ export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
         pagination: resetPage(state.pagination),
         filters: {
           status: "",
-          type: "",
+          subject: "",
           startDate: "",
           endDate: "",
         },
@@ -48,12 +48,12 @@ export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
         },
       };
     }
-    case FeedProviderActionKind.SET_TYPE: {
+    case FeedProviderActionKind.SET_SUBJECT: {
       return {
         pagination: resetPage(state.pagination),
         filters: {
           ...state.filters,
-          type: action.payload,
+          subject: action.payload,
         },
       };
     }

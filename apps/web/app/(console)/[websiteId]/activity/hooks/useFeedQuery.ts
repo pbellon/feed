@@ -7,6 +7,7 @@ import {
   FeedEventsQuery,
   FeedEventsReply,
   FeedEventStatus,
+  FeedEventSubject,
   FeedEventType,
 } from "@feed/types";
 import { useMemo } from "react";
@@ -26,7 +27,10 @@ const asFeedQuerystring = (
   startDate: filters.startDate.length > 0 ? filters.startDate : undefined,
   status:
     filters.status.length > 0 ? (filters.status as FeedEventStatus) : undefined,
-  type: filters.type.length > 0 ? (filters.type as FeedEventType) : undefined,
+  subject:
+    filters.subject.length > 0
+      ? (filters.subject as FeedEventSubject)
+      : undefined,
   page: pagination.page,
   pageSize: pagination.pageSize,
 });
