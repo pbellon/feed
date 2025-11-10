@@ -1,10 +1,12 @@
-import { EventSubjectIcon, EventSubjectText } from "@/lib/ui/EventSubject";
-import { FeedEventSubject } from "@feed/types";
-import { Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+
+import { FeedEventSubject } from "@feed/types";
+
+import { EventSubjectIcon, EventSubjectText } from "@/lib/ui/EventSubject";
 
 export function FeedSubjectCellContentSkeleton() {
   return (

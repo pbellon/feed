@@ -1,16 +1,25 @@
 import { Reducer } from "react";
 import {
   FeedContextAction,
-  FeedProviderActionKind,
-  FeedProviderPagination,
+  FeedContextActionKind,
+  FeedContextPagination,
   FeedContextState,
 } from "./types";
+import { SortOrder } from "@feed/types";
 
-function resetPage(pagination: FeedProviderPagination): FeedProviderPagination {
+function resetPage(pagination: FeedContextPagination): FeedContextPagination {
   return {
     pageSize: pagination.pageSize,
     page: 0,
   };
+}
+
+function toggleSortOrder(order: SortOrder): SortOrder {
+  if (order === SortOrder.ASCENDING) {
+    return SortOrder.DESCENDING;
+  }
+
+  return SortOrder.ASCENDING;
 }
 
 export const reducer: Reducer<FeedContextState, FeedContextAction> = (
@@ -18,8 +27,9 @@ export const reducer: Reducer<FeedContextState, FeedContextAction> = (
   action
 ) => {
   switch (action.type) {
-    case FeedProviderActionKind.RESET_FILTERS: {
+    case FeedContextActionKind.RESET_FILTERS: {
       return {
+        ...state,
         pagination: resetPage(state.pagination),
         filters: {
           status: "",
@@ -29,8 +39,9 @@ export const reducer: Reducer<FeedContextState, FeedContextAction> = (
         },
       };
     }
-    case FeedProviderActionKind.SET_START_DATE: {
+    case FeedContextActionKind.SET_START_DATE: {
       return {
+        ...state,
         pagination: resetPage(state.pagination),
         filters: {
           ...state.filters,
@@ -38,8 +49,9 @@ export const reducer: Reducer<FeedContextState, FeedContextAction> = (
         },
       };
     }
-    case FeedProviderActionKind.SET_END_DATE: {
+    case FeedContextActionKind.SET_END_DATE: {
       return {
+        ...state,
         pagination: resetPage(state.pagination),
         filters: {
           ...state.filters,
@@ -47,8 +59,9 @@ export const reducer: Reducer<FeedContextState, FeedContextAction> = (
         },
       };
     }
-    case FeedProviderActionKind.SET_STATUS: {
+    case FeedContextActionKind.SET_STATUS: {
       return {
+        ...state,
         pagination: resetPage(state.pagination),
         filters: {
           ...state.filters,
@@ -56,8 +69,9 @@ export const reducer: Reducer<FeedContextState, FeedContextAction> = (
         },
       };
     }
-    case FeedProviderActionKind.SET_SUBJECT: {
+    case FeedContextActionKind.SET_SUBJECT: {
       return {
+        ...state,
         pagination: resetPage(state.pagination),
         filters: {
           ...state.filters,
@@ -65,7 +79,7 @@ export const reducer: Reducer<FeedContextState, FeedContextAction> = (
         },
       };
     }
-    case FeedProviderActionKind.SET_PAGE: {
+    case FeedContextActionKind.SET_PAGE: {
       return {
         ...state,
         pagination: {
@@ -74,7 +88,7 @@ export const reducer: Reducer<FeedContextState, FeedContextAction> = (
         },
       };
     }
-    case FeedProviderActionKind.SET_PAGE_SIZE: {
+    case FeedContextActionKind.SET_PAGE_SIZE: {
       return {
         ...state,
         pagination: {
@@ -83,12 +97,21 @@ export const reducer: Reducer<FeedContextState, FeedContextAction> = (
         },
       };
     }
-
-    case FeedProviderActionKind.UPDATE_STATE: {
+    case FeedContextActionKind.SORT_BY_COLUMN: {
+      const nextOrder =
+        state.sort.column == action.payload
+          ? toggleSortOrder(state.sort.order)
+          : SortOrder.ASCENDING;
       return {
-        pagination: action.payload.pagination,
-        filters: action.payload.filters,
+        ...state,
+        sort: {
+          column: action.payload,
+          order: nextOrder,
+        },
       };
+    }
+    case FeedContextActionKind.UPDATE_STATE: {
+      return action.payload;
     }
   }
 };

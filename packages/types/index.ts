@@ -56,6 +56,20 @@ export const FeedEventSchema = Type.Object({
   information: Type.Optional(Type.Any()),
 });
 
+export enum FeedSortableColumn {
+  SUBJECT = "subject",
+  STATUS = "status",
+  CREATED_AT = "createdAt",
+  UPDATED_AT = "updatedAt",
+}
+export const FeedSortableColumnSchema = Type.Enum(FeedSortableColumn);
+
+export enum SortOrder {
+  ASCENDING = "asc",
+  DESCENDING = "desc",
+}
+export const SortOrderSchema = Type.Enum(SortOrder);
+
 export type FeedEvent = Static<typeof FeedEventSchema>;
 
 export const WebsiteSchema = Type.Object({
@@ -76,6 +90,8 @@ export const FeedEventsQuerySchema = Type.Object({
   endDate: Type.Optional(Type.String({ format: "date" })),
   page: Type.Optional(Type.Integer()),
   pageSize: Type.Optional(Type.Integer()),
+  sortBy: Type.Optional(FeedSortableColumnSchema),
+  sortOrder: Type.Optional(SortOrderSchema),
 });
 /**
  * Type of the Query string parameters accepted by /websites/:id/events API

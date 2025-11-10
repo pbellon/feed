@@ -1,4 +1,9 @@
-import { FeedEventStatus, FeedEventSubject } from "@feed/types";
+import {
+  FeedEventStatus,
+  FeedEventSubject,
+  FeedSortableColumn,
+  SortOrder,
+} from "@feed/types";
 
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { FeedContextState } from "./types";
@@ -45,6 +50,25 @@ function parsePositiveInt(
   return undefined;
 }
 
+function parseSortColumn(param: string | null): FeedSortableColumn | undefined {
+  if (
+    param &&
+    Object.values(FeedSortableColumn).includes(param as FeedSortableColumn)
+  ) {
+    return param as FeedSortableColumn;
+  }
+
+  return undefined;
+}
+
+function parseSortOrder(param: string | null): SortOrder | undefined {
+  if (param && Object.values(SortOrder).includes(param as SortOrder)) {
+    return param as SortOrder;
+  }
+
+  return undefined;
+}
+
 export function parseEventSearchParams(
   params: ReadonlyURLSearchParams
 ): FeedContextState {
@@ -54,8 +78,20 @@ export function parseEventSearchParams(
   const subject = parseEventSubject(params.get("subject"));
   const page = parsePositiveInt(params.get("page"));
   const pageSize = parsePositiveInt(params.get("pageSize"), 25);
+  const sortColumn = parseSortColumn(params.get("sortBy"));
+  const sortOrder = parseSortOrder(params.get("sortOrder"));
 
   return {
+    sort:
+      sortColumn && sortOrder
+        ? {
+            column: sortColumn,
+            order: sortOrder,
+          }
+        : {
+            column: FeedSortableColumn.CREATED_AT,
+            order: SortOrder.DESCENDING,
+          },
     filters: {
       status: status ?? "",
       subject: subject ?? "",

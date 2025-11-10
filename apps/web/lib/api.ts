@@ -22,12 +22,14 @@ export async function getEvents(
   query: FeedEventsQuery
 ): Promise<FeedEventsReply> {
   const searchQuery = constructSearchParams({
+    endDate: query.endDate,
     page: query.page?.toString(),
     pageSize: query.pageSize?.toString(),
-    subject: query.subject,
+    sortBy: query.sortBy,
+    sortOrder: query.sortOrder,
     startDate: query.startDate,
-    endDate: query.endDate,
     status: query.status,
+    subject: query.subject,
   });
 
   let fullUrl = url(`/websites/${websiteId}/events`);

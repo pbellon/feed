@@ -1,5 +1,5 @@
 "use client";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 

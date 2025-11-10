@@ -1,23 +1,24 @@
 "use client";
 
-import { EventStatusChip } from "@/lib/ui/EventStatus";
-import { FeedEvent } from "@feed/types";
-import {
-  TableBody,
-  TableFooter,
-  TablePagination,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import Table from "@mui/material/Table";
-import Box from "node_modules/@mui/material/Box";
-import TableCell from "node_modules/@mui/material/TableCell";
-import { useCallback } from "react";
-import { FeedDateCellContent } from "./content/FeedDateCellContent";
-import { FeedSubjectCellContent } from "./content/FeedSubjectCellContent";
-import { FeedTableSkeleton } from "./FeedTableSkeleton";
 import { useFeedProvider } from "@/lib/hooks/useFeedProvider";
 import { useFeedQuery } from "@/lib/hooks/useFeedQuery";
+import { EventStatusChip } from "@/lib/ui/EventStatus";
+import { FeedEvent } from "@feed/types";
+
+import Table from "@mui/material/Table";
+import TableFooter from "@mui/material/TableFooter";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import TableCell from "@mui/material/TableCell";
+import { useCallback } from "react";
+
+import { FeedTableBase } from "./FeedTableBase";
+import { FeedTableSkeleton } from "./FeedTableSkeleton";
+import { FeedDateCellContent } from "./content/FeedDateCellContent";
+import { FeedSubjectCellContent } from "./content/FeedSubjectCellContent";
+import TableBody from "@mui/material/TableBody";
 
 type FeedTableProps = {
   websiteId: string;
@@ -28,6 +29,9 @@ function FeedEventTableRow({ event }: Readonly<{ event: FeedEvent }>) {
     <TableRow>
       <TableCell>
         <FeedDateCellContent date={event.createdAt} />
+      </TableCell>
+      <TableCell>
+        <FeedDateCellContent date={event.updatedAt} />
       </TableCell>
       <TableCell>
         <Box sx={{ display: "flex", justifyContent: "stretch" }}>
@@ -46,12 +50,14 @@ function FeedEventTableRow({ event }: Readonly<{ event: FeedEvent }>) {
 }
 
 export function FeedTable({ websiteId }: FeedTableProps) {
-  const { filters, pagination, setPage, setPageSize } = useFeedProvider();
+  const { filters, pagination, sort, setPage, setPageSize, sortBy } =
+    useFeedProvider();
 
   const { isLoading, data, isFetching } = useFeedQuery({
     websiteId,
     filters,
     pagination,
+    sort,
   });
 
   const handlePageChange = useCallback(
@@ -79,7 +85,7 @@ export function FeedTable({ websiteId }: FeedTableProps) {
           <Typography variant="h4">No events found</Typography>
           <Typography>Please remove some filters</Typography>
         </Box>
-        <Table>
+        <FeedTableBase sort={sort} onSort={sortBy}>
           <TableFooter>
             <TablePagination
               count={data?.pagination.total ?? 0}
@@ -90,13 +96,13 @@ export function FeedTable({ websiteId }: FeedTableProps) {
               rowsPerPageOptions={[5, 10, 25]}
             />
           </TableFooter>
-        </Table>
+        </FeedTableBase>
       </>
     );
   }
 
   return (
-    <Table sx={{ opacity: isFetching ? 0.5 : 1 }}>
+    <FeedTableBase isPending={isFetching} sort={sort} onSort={sortBy}>
       <TableBody>
         {(data?.events ?? []).map((event) => (
           <FeedEventTableRow key={event.id} event={event} />
@@ -114,6 +120,6 @@ export function FeedTable({ websiteId }: FeedTableProps) {
           />
         </TableRow>
       </TableFooter>
-    </Table>
+    </FeedTableBase>
   );
 }

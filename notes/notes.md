@@ -37,6 +37,11 @@
 
 - avoir un système de migration, là je suis allé au plus simple pour la démo
 
+## Système de tri
+
+Actuellement les données du feed sont toujours triées de la même façon: par leur createdAt, du plus
+récent au plus ancien.
+
 ## Bug connu sur les search params
 
 Si on met à la main un `page=100` par exemple dans les search params de l'URL ça va provoquer un cas

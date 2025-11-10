@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 import { getWebsites } from "@/lib/api";
-import { Suspense } from "react";
-import { CircularProgress } from "@mui/material";
 
 export const dynamic = "force-dynamic";
 

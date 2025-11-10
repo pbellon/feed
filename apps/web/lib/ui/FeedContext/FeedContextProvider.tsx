@@ -1,6 +1,10 @@
 "use client";
 
-import { FeedEventStatus, FeedEventSubject } from "@feed/types";
+import {
+  FeedEventStatus,
+  FeedEventSubject,
+  FeedSortableColumn,
+} from "@feed/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   useCallback,
@@ -11,7 +15,7 @@ import {
   useState,
 } from "react";
 import { reducer } from "./reducer";
-import { FeedProviderActionKind, FeedContextValue } from "./types";
+import { FeedContextActionKind, FeedContextValue } from "./types";
 import { parseEventSearchParams } from "./utils";
 import { FeedProviderContext } from "./FeedContext";
 
@@ -33,49 +37,56 @@ export function FeedContextProvider({ children }: FeedProviderProps) {
 
   const setStatus = useCallback((status: FeedEventStatus | "") => {
     dispatch({
-      type: FeedProviderActionKind.SET_STATUS,
+      type: FeedContextActionKind.SET_STATUS,
       payload: status,
     });
   }, []);
 
   const setSubject = useCallback((type: FeedEventSubject | "") => {
     dispatch({
-      type: FeedProviderActionKind.SET_SUBJECT,
+      type: FeedContextActionKind.SET_SUBJECT,
       payload: type,
     });
   }, []);
 
   const setStartDate = useCallback((start: string | "") => {
     dispatch({
-      type: FeedProviderActionKind.SET_START_DATE,
+      type: FeedContextActionKind.SET_START_DATE,
       payload: start,
     });
   }, []);
 
   const setEndDate = useCallback((end: string | "") => {
     dispatch({
-      type: FeedProviderActionKind.SET_END_DATE,
+      type: FeedContextActionKind.SET_END_DATE,
       payload: end,
     });
   }, []);
 
   const resetFilters = useCallback(() => {
     dispatch({
-      type: FeedProviderActionKind.RESET_FILTERS,
+      type: FeedContextActionKind.RESET_FILTERS,
     });
   }, []);
 
   const setPage = useCallback((page: number) => {
     dispatch({
-      type: FeedProviderActionKind.SET_PAGE,
+      type: FeedContextActionKind.SET_PAGE,
       payload: page,
     });
   }, []);
 
   const setPageSize = useCallback((pageSize: number) => {
     dispatch({
-      type: FeedProviderActionKind.SET_PAGE_SIZE,
+      type: FeedContextActionKind.SET_PAGE_SIZE,
       payload: pageSize,
+    });
+  }, []);
+
+  const sortBy = useCallback((column: FeedSortableColumn) => {
+    dispatch({
+      type: FeedContextActionKind.SORT_BY_COLUMN,
+      payload: column,
     });
   }, []);
 
@@ -97,6 +108,7 @@ export function FeedContextProvider({ children }: FeedProviderProps) {
     () => ({
       filters: state.filters,
       pagination: state.pagination,
+      sort: state.sort,
       hasFilters,
       setStatus,
       setSubject,
@@ -104,11 +116,13 @@ export function FeedContextProvider({ children }: FeedProviderProps) {
       setEndDate,
       setPage,
       setPageSize,
+      sortBy,
       resetFilters,
     }),
     [
       state.filters,
       state.pagination,
+      state.sort,
       hasFilters,
       setStatus,
       setSubject,
@@ -116,6 +130,7 @@ export function FeedContextProvider({ children }: FeedProviderProps) {
       setEndDate,
       setPage,
       setPageSize,
+      sortBy,
       resetFilters,
     ]
   );
@@ -129,12 +144,24 @@ export function FeedContextProvider({ children }: FeedProviderProps) {
     if (state.filters.startDate) s.set("startDate", state.filters.startDate);
     if (state.filters.endDate) s.set("endDate", state.filters.endDate);
 
+    s.set("sortBy", state.sort.column);
+    s.set("sortOrder", state.sort.order);
+
     // pagination
     s.set("page", String(state.pagination.page));
     s.set("pageSize", String(state.pagination.pageSize));
 
     return s.toString();
-  }, [state.filters, state.pagination]);
+  }, [
+    state.filters.endDate,
+    state.filters.startDate,
+    state.filters.status,
+    state.filters.subject,
+    state.pagination.page,
+    state.pagination.pageSize,
+    state.sort.column,
+    state.sort.order,
+  ]);
 
   // State => URL change
   useEffect(() => {
@@ -154,7 +181,7 @@ export function FeedContextProvider({ children }: FeedProviderProps) {
   useEffect(() => {
     updatingFromUrl.current = true;
     const state = parseEventSearchParams(sp);
-    dispatch({ type: FeedProviderActionKind.UPDATE_STATE, payload: state });
+    dispatch({ type: FeedContextActionKind.UPDATE_STATE, payload: state });
 
     // "unlock" state => URL update, see effect just above
     queueMicrotask(() => {

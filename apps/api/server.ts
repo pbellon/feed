@@ -10,12 +10,15 @@ import {
   type PaginationData,
   ApiErrorReplySchema,
   FeedEventSubject,
+  FeedSortableColumn,
+  SortOrder,
 } from "@feed/types";
 import Fastify from "fastify";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import fastifyBetterSqlite3Plugin from "./plugins/fastify-better-sqlite3.js";
 import { ApiFeedEventsReplySchema, ErrorCode } from "./types.js";
+import { getColumnFromFeedSortableColumn, getSortOrder } from "./utils.js";
 
 const distDir = path.dirname(fileURLToPath(import.meta.url));
 const pathToDb = path.join(distDir, "..", "data.db");
@@ -95,6 +98,8 @@ server.get(
       endDate,
       startDate,
       subject,
+      sortBy,
+      sortOrder,
     } = request.query;
     const websiteId = request.params.websiteId;
 
@@ -135,6 +140,14 @@ server.get(
     const paginationQuery = `LIMIT ? OFFSET ?`;
     params.push(...whereParams, pageSize, offset);
 
+    let orderBy = "created_at";
+    let order = "DESC";
+
+    if (sortBy && sortOrder) {
+      orderBy = getColumnFromFeedSortableColumn(sortBy);
+      order = getSortOrder(sortOrder);
+    }
+
     // Final query with JOIN to include user details
     const query = `
       SELECT events.id, events.event_status AS status, events.description,
@@ -145,7 +158,7 @@ server.get(
       FROM events
       JOIN users ON events.user_id = users.id
       WHERE website_id = ? ${whereClause ? `AND ${whereClause}` : ""}
-      ORDER BY events.created_at DESC
+      ORDER BY ${orderBy} ${order}
       ${paginationQuery}
     `;
 

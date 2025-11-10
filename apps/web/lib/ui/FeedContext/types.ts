@@ -1,23 +1,34 @@
-import { FeedEventStatus, FeedEventSubject } from "@feed/types";
+import {
+  FeedEventStatus,
+  FeedEventSubject,
+  FeedSortableColumn,
+  SortOrder,
+} from "@feed/types";
 
-export type FeedProviderFilters = {
+export type FeedContextFilters = {
   subject: FeedEventSubject | "";
   status: FeedEventStatus | "";
   startDate: string | "";
   endDate: string | "";
 };
 
-export type FeedProviderPagination = {
+export type FeedContextPagination = {
   page: number;
   pageSize: number;
+};
+
+export type FeedContextSort = {
+  column: FeedSortableColumn;
+  order: SortOrder;
 };
 
 /**
  * Main state that will control the filter bar & pagination states
  */
 export type FeedContextState = {
-  filters: FeedProviderFilters;
-  pagination: FeedProviderPagination;
+  filters: FeedContextFilters;
+  pagination: FeedContextPagination;
+  sort: FeedContextSort;
 };
 
 /**
@@ -39,13 +50,15 @@ export type FeedContextCallbacks = {
 
   setPage: (page: number) => void;
   setPageSize: (pageSize: number) => void;
+
+  sortBy: (column: FeedSortableColumn) => void;
 };
 
 // Full context value including state & callbacks
 export type FeedContextValue = FeedContextStateAndDerived &
   FeedContextCallbacks;
 
-export enum FeedProviderActionKind {
+export enum FeedContextActionKind {
   // filters related actions
   RESET_FILTERS = "RESET_FILTERS",
   SET_SUBJECT = "SET_SUBJECT",
@@ -57,48 +70,57 @@ export enum FeedProviderActionKind {
   SET_PAGE = "SET_PAGE",
   SET_PAGE_SIZE = "SET_PAGE_SIZE",
 
+  // sort by column
+  SORT_BY_COLUMN = "SORT_BY_COLUMN",
+
   // transversal update
   UPDATE_STATE = "UPDATE_STATE",
 }
 
 // Filter actions types
 type ResetFiltersAction = {
-  type: FeedProviderActionKind.RESET_FILTERS;
+  type: FeedContextActionKind.RESET_FILTERS;
 };
 
 type SetSubjectAction = {
-  type: FeedProviderActionKind.SET_SUBJECT;
+  type: FeedContextActionKind.SET_SUBJECT;
   payload: FeedEventSubject | "";
 };
 
 type SetStatusAction = {
-  type: FeedProviderActionKind.SET_STATUS;
+  type: FeedContextActionKind.SET_STATUS;
   payload: FeedEventStatus | "";
 };
 
 type SetStartDateAction = {
-  type: FeedProviderActionKind.SET_START_DATE;
+  type: FeedContextActionKind.SET_START_DATE;
   payload: string | "";
 };
 
 type SetEndDateAction = {
-  type: FeedProviderActionKind.SET_END_DATE;
+  type: FeedContextActionKind.SET_END_DATE;
   payload: string | "";
 };
 
 // Pagination actions types
 type SetPageAction = {
-  type: FeedProviderActionKind.SET_PAGE;
+  type: FeedContextActionKind.SET_PAGE;
   payload: number;
 };
 
 type SetPageSizeAction = {
-  type: FeedProviderActionKind.SET_PAGE_SIZE;
+  type: FeedContextActionKind.SET_PAGE_SIZE;
   payload: number;
 };
 
+// Sort action
+type SortByColumnAction = {
+  type: FeedContextActionKind.SORT_BY_COLUMN;
+  payload: FeedSortableColumn;
+};
+
 type UpdateStateAction = {
-  type: FeedProviderActionKind.UPDATE_STATE;
+  type: FeedContextActionKind.UPDATE_STATE;
   payload: FeedContextState;
 };
 
@@ -110,4 +132,5 @@ export type FeedContextAction =
   | SetEndDateAction
   | SetPageAction
   | SetPageSizeAction
+  | SortByColumnAction
   | UpdateStateAction;

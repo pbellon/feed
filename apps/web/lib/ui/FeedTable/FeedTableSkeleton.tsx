@@ -1,13 +1,17 @@
-import { Skeleton } from "@mui/material";
-import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+
+import { FeedTableBase } from "./FeedTableBase";
 import { FeedSubjectCellContentSkeleton } from "./content/FeedSubjectCellContent";
+import Skeleton from "@mui/material/Skeleton";
 
 function SkeletonTableRows({ nbRows }: { nbRows: number }) {
   return [...Array(nbRows)].map((_, index) => (
     <TableRow key={index}>
+      <TableCell>
+        <Skeleton animation="wave" variant="text" />
+      </TableCell>
       <TableCell>
         <Skeleton animation="wave" variant="text" />
       </TableCell>
@@ -31,10 +35,10 @@ function SkeletonTableRows({ nbRows }: { nbRows: number }) {
 
 export function FeedTableSkeleton() {
   return (
-    <Table>
+    <FeedTableBase>
       <TableBody>
         <SkeletonTableRows nbRows={10} />
       </TableBody>
-    </Table>
+    </FeedTableBase>
   );
 }
