@@ -13,9 +13,10 @@
 .barIconHolder {
   width: 40px;
   height: 40px;
-  display: "flex";
-  align-items: "center";
-  justify-content: "center";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
 }
 
 .clearButton {
@@ -31,6 +32,7 @@
   margin-bottom: calc(var(--mui-spacing) * 2);
   display: flex;
   gap: var(--mui-spacing);
+  align-items: center;
 
   &:global(.MuiPaper-root) {
     background-color: var(--secondary-background);
