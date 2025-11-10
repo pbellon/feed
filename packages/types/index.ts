@@ -77,6 +77,10 @@ export const FeedEventsQuerySchema = Type.Object({
   page: Type.Optional(Type.Integer()),
   pageSize: Type.Optional(Type.Integer()),
 });
+/**
+ * Type of the Query string parameters accepted by /websites/:id/events API
+ * endpoint.
+ */
 export type FeedEventsQuery = Static<typeof FeedEventsQuerySchema>;
 
 /**

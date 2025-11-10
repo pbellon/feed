@@ -1,6 +1,6 @@
 "use client";
 
-import { FeedEventStatus, FeedEventSubject, FeedEventType } from "@feed/types";
+import { FeedEventStatus, FeedEventSubject } from "@feed/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   createContext,
@@ -8,16 +8,12 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useRef,
   useState,
 } from "react";
 import { reducer } from "./reducer";
-import {
-  FeedProviderActionKind,
-  FeedProviderContextState,
-  FeedProviderState,
-} from "./types";
-
-import { parseEventSearchParams } from "@/lib/searchParams";
+import { FeedProviderActionKind, FeedProviderContextState } from "./types";
+import { parseEventSearchParams } from "./utils";
 
 type FeedProviderProps = {
   children: React.ReactNode;
@@ -30,22 +26,11 @@ export function FeedProvider({ children }: FeedProviderProps) {
   const sp = useSearchParams();
   const router = useRouter();
 
-  const [initialState] = useState((): FeedProviderState => {
-    const query = parseEventSearchParams(sp);
-    console.log("initial state: ", query);
-    return {
-      filters: {
-        status: query.status ?? "",
-        subject: query.subject ?? "",
-        startDate: query.startDate ?? "",
-        endDate: query.endDate ?? "",
-      },
-      pagination: {
-        page: query.page ?? 0,
-        pageSize: query.pageSize ?? 10,
-      },
-    };
-  });
+  // lock to avoid infinite loop between useEffects below that enable
+  // two-way sync between URL <-> local reducer state
+  const updatingFromUrl = useRef(false);
+
+  const [initialState] = useState(() => parseEventSearchParams(sp));
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -63,13 +48,17 @@ export function FeedProvider({ children }: FeedProviderProps) {
     });
   }, []);
 
-  const setDateRange = useCallback((start: string | "", end: string | "") => {
+  const setStartDate = useCallback((start: string | "") => {
     dispatch({
-      type: FeedProviderActionKind.SET_DATE_RANGE,
-      payload: {
-        start,
-        end,
-      },
+      type: FeedProviderActionKind.SET_START_DATE,
+      payload: start,
+    });
+  }, []);
+
+  const setEndDate = useCallback((end: string | "") => {
+    dispatch({
+      type: FeedProviderActionKind.SET_END_DATE,
+      payload: end,
     });
   }, []);
 
@@ -93,26 +82,44 @@ export function FeedProvider({ children }: FeedProviderProps) {
     });
   }, []);
 
+  const hasFilters = useMemo(() => {
+    return (
+      state.filters.startDate !== "" ||
+      state.filters.endDate !== "" ||
+      state.filters.status !== "" ||
+      state.filters.subject !== ""
+    );
+  }, [
+    state.filters.endDate,
+    state.filters.startDate,
+    state.filters.status,
+    state.filters.subject,
+  ]);
+
   const value = useMemo<FeedProviderContextState>(
     () => ({
       filters: state.filters,
       pagination: state.pagination,
+      hasFilters,
       setStatus,
       setSubject,
-      setDateRange,
+      setStartDate,
+      setEndDate,
       setPage,
       setPageSize,
       resetFilters,
     }),
     [
-      resetFilters,
-      setDateRange,
-      setPage,
-      setPageSize,
-      setStatus,
-      setSubject,
       state.filters,
       state.pagination,
+      hasFilters,
+      setStatus,
+      setSubject,
+      setStartDate,
+      setEndDate,
+      setPage,
+      setPageSize,
+      resetFilters,
     ]
   );
 
@@ -132,14 +139,31 @@ export function FeedProvider({ children }: FeedProviderProps) {
     return s.toString();
   }, [state.filters, state.pagination]);
 
-  // Synchronise l'URL quand l'état change
+  // State => URL change
   useEffect(() => {
+    // ensure we're not already updating from URL to avoid rewriting
+    // history with current state
+    if (updatingFromUrl.current) return;
     const next = buildSearchParams();
     const curr = sp.toString();
     if (next !== curr) {
       router.push(`?${next}`, { scroll: false });
     }
-  }, [buildSearchParams, router, sp]);
+    // Disable to have single way of update (state => URL)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [buildSearchParams, router]);
+
+  // URL => state change
+  useEffect(() => {
+    updatingFromUrl.current = true;
+    const state = parseEventSearchParams(sp);
+    dispatch({ type: FeedProviderActionKind.UPDATE_STATE, payload: state });
+
+    // "unlock" state => URL update, see effect just above
+    queueMicrotask(() => {
+      updatingFromUrl.current = false;
+    });
+  }, [sp]);
 
   return (
     <FeedProviderContext.Provider value={value}>

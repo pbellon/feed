@@ -1,0 +1,22 @@
+.filter {
+  background-color: "var(--main-background)";
+  min-width: 200px;
+}
+
+.barIconHolder {
+  width: 40px;
+  height: 40px;
+  display: "flex";
+  align-items: "center";
+  justify-content: "center";
+}
+
+.clearButton {
+  align-self: right;
+
+  &:global(.MuiButton-root) {
+    min-width: 30px;
+    padding-left: var(--mui-spacing);
+    padding-right: var(--mui-spacing);
+  }
+}

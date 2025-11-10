@@ -8,7 +8,6 @@ import {
   FeedEventsReply,
   FeedEventStatus,
   FeedEventSubject,
-  FeedEventType,
 } from "@feed/types";
 import { useMemo } from "react";
 import { getEvents } from "@/lib/api";

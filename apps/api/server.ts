@@ -87,7 +87,7 @@ server.get(
       response: ApiFeedEventsReplySchema,
     },
   },
-  (request, reply) => {
+  (request) => {
     const {
       status,
       page = 0,
@@ -111,15 +111,19 @@ server.get(
       filters.push(["event_subject = ?", [subject]]);
     }
 
+    // convert both date string to datetime string
+    const startDateTime = startDate ? `${startDate}T00:00:00` : undefined;
+    const endDateTime = endDate ? `${endDate}T23:59:59` : undefined;
+
     if (startDate && endDate) {
-      filters.push(["created_at BETWEEN ? AND ?", [startDate, endDate]]);
-    } else if (startDate || endDate) {
-      reply.code(400).send({
-        statusCode: 400,
-        code: ErrorCode.INVALID_EVENT_DATE_PARAMS,
-        message: "Both startDate and endDate must be specified",
-      });
-      return;
+      filters.push([
+        "created_at BETWEEN ? AND ?",
+        [startDateTime, endDateTime],
+      ]);
+    } else if (startDate) {
+      filters.push(["created_at >= ?", [startDateTime]]);
+    } else if (endDate) {
+      filters.push(["created_at <= ?", [endDateTime]]);
     }
 
     // Build the WHERE clause

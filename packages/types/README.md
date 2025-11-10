@@ -1,3 +1,3 @@
-# packages/types
+# @feed/types
 
-Small package dedicated to shared types & schema for API results.
+Small package dedicated to shared schema & types for API results and requests.

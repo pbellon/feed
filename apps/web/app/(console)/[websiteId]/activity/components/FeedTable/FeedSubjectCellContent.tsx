@@ -3,7 +3,33 @@ import { FeedEventSubject } from "@feed/types";
 import { Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
+import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+
+export function FeedSubjectCellContentSkeleton() {
+  return (
+    <Grid container spacing={2}>
+      <Grid
+        size={2}
+        sx={{ display: "flex", alignItems: "center", justifyContent: "right" }}
+      >
+        <Skeleton variant="circular" animation="wave">
+          <Avatar />
+        </Skeleton>
+      </Grid>
+      <Grid size={10}>
+        <Stack direction="column">
+          <Typography sx={{ fontWeight: "800" }}>
+            <Skeleton animation="wave" />
+          </Typography>
+          <Typography>
+            <Skeleton animation="wave" />
+          </Typography>
+        </Stack>
+      </Grid>
+    </Grid>
+  );
+}
 
 type FeedSubjectCellContentProps = {
   subject: FeedEventSubject;

@@ -17,19 +17,24 @@ export type FeedProviderState = {
   pagination: FeedProviderPagination;
 };
 
+export type FeedProviderStateAndDerivated = FeedProviderState & {
+  hasFilters: boolean;
+};
+
 export type FeedProviderCallbacks = {
   resetFilters: () => void;
 
   setStatus: (status: FeedEventStatus | "") => void;
   setSubject: (subject: FeedEventSubject | "") => void;
 
-  setDateRange: (startDate: string, endDate: string) => void;
+  setStartDate: (start: string | "") => void;
+  setEndDate: (end: string | "") => void;
 
   setPage: (page: number) => void;
   setPageSize: (pageSize: number) => void;
 };
 
-export type FeedProviderContextState = FeedProviderState &
+export type FeedProviderContextState = FeedProviderStateAndDerivated &
   FeedProviderCallbacks;
 
 export enum FeedProviderActionKind {
@@ -37,13 +42,18 @@ export enum FeedProviderActionKind {
   RESET_FILTERS = "RESET_FILTERS",
   SET_SUBJECT = "SET_SUBJECT",
   SET_STATUS = "SET_STATUS",
-  SET_DATE_RANGE = "SET_DATE_RANGE",
+  SET_START_DATE = "SET_START_DATE",
+  SET_END_DATE = "SET_END_DATE",
 
   // pagination related actions
   SET_PAGE = "SET_PAGE",
   SET_PAGE_SIZE = "SET_PAGE_SIZE",
+
+  // transversal update
+  UPDATE_STATE = "UPDATE_STATE",
 }
 
+// Filter actions types
 type ResetFiltersAction = {
   type: FeedProviderActionKind.RESET_FILTERS;
 };
@@ -58,14 +68,17 @@ type SetStatusAction = {
   payload: FeedEventStatus | "";
 };
 
-type SetDateRangeAction = {
-  type: FeedProviderActionKind.SET_DATE_RANGE;
-  payload: {
-    start?: string;
-    end?: string;
-  };
+type SetStartDateAction = {
+  type: FeedProviderActionKind.SET_START_DATE;
+  payload: string | "";
 };
 
+type SetEndDateAction = {
+  type: FeedProviderActionKind.SET_END_DATE;
+  payload: string | "";
+};
+
+// Pagination actions types
 type SetPageAction = {
   type: FeedProviderActionKind.SET_PAGE;
   payload: number;
@@ -76,10 +89,17 @@ type SetPageSizeAction = {
   payload: number;
 };
 
+type UpdateStateAction = {
+  type: FeedProviderActionKind.UPDATE_STATE;
+  payload: FeedProviderState;
+};
+
 export type FeedProviderAction =
   | ResetFiltersAction
   | SetSubjectAction
   | SetStatusAction
-  | SetDateRangeAction
+  | SetStartDateAction
+  | SetEndDateAction
   | SetPageAction
-  | SetPageSizeAction;
+  | SetPageSizeAction
+  | UpdateStateAction;

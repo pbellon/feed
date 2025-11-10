@@ -29,13 +29,21 @@ export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
         },
       };
     }
-    case FeedProviderActionKind.SET_DATE_RANGE: {
+    case FeedProviderActionKind.SET_START_DATE: {
       return {
         pagination: resetPage(state.pagination),
         filters: {
           ...state.filters,
-          startDate: action.payload.start ?? "",
-          endDate: action.payload.end ?? "",
+          startDate: action.payload,
+        },
+      };
+    }
+    case FeedProviderActionKind.SET_END_DATE: {
+      return {
+        pagination: resetPage(state.pagination),
+        filters: {
+          ...state.filters,
+          endDate: action.payload,
         },
       };
     }
@@ -73,6 +81,13 @@ export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
           page: 0,
           pageSize: action.payload,
         },
+      };
+    }
+
+    case FeedProviderActionKind.UPDATE_STATE: {
+      return {
+        pagination: action.payload.pagination,
+        filters: action.payload.filters,
       };
     }
   }

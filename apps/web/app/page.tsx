@@ -1,11 +1,12 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { getWebsites } from "@/lib/api";
 import { Suspense } from "react";
 import { CircularProgress } from "@mui/material";
+
+export const dynamic = "force-dynamic";
 
 function LoadingPlaceholder() {
   return (

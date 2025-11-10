@@ -10,9 +10,9 @@ type Option = {
 };
 
 type FeedStatusFilterProps = {
-  sx?: AutocompleteProps<Option, false, false, false>["sx"];
-  value: FeedEventSubject | "";
+  className?: string;
   onChange: (value: FeedEventSubject | "") => void;
+  value: FeedEventSubject | "";
 };
 
 const options = Object.values(FeedEventSubject).map(
@@ -23,9 +23,9 @@ const options = Object.values(FeedEventSubject).map(
 );
 
 export function FeedSubjectFilter({
-  sx,
-  value,
+  className,
   onChange,
+  value,
 }: FeedStatusFilterProps) {
   const handleChange = useCallback(
     (_: SyntheticEvent, value: Option | null) => {
@@ -40,12 +40,12 @@ export function FeedSubjectFilter({
 
   return (
     <Autocomplete
-      sx={sx}
-      size="small"
-      options={options}
-      value={selectedValue}
+      className={className}
       onChange={handleChange}
+      options={options}
       renderInput={(params) => <TextField {...params} label="Subject" />}
+      size="small"
+      value={selectedValue}
     />
   );
 }
