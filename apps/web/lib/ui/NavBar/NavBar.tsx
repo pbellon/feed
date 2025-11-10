@@ -17,8 +17,10 @@ export default function NavBar({ websiteId }: Readonly<{ websiteId: string }>) {
   return (
     <div className={styles.navbar}>
       <Container>
-        <WebsiteSelector websiteId={websiteId} websites={websites} />
-        <NavBarLinks />
+        <div className={styles.separatorWrapper}>
+          <WebsiteSelector websiteId={websiteId} websites={websites} />
+          <NavBarLinks />
+        </div>
       </Container>
     </div>
   );

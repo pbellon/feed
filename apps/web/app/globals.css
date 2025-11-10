@@ -32,7 +32,8 @@ body {
 }
 
 /**
- * Hack: not sure why but NavBar select causes
+ * Hack to fix @mui/material/Select. 
+ * Not sure why but NavBar select causes
  */
 .MuiBackdrop-root.MuiBackdrop-invisible,
 .MuiPopover-root[aria-hidden="true"] {

@@ -23,52 +23,49 @@ export function FeedFilterBar() {
     resetFilters,
   } = useFeedProvider();
   return (
-    <Paper
-      sx={{
-        backgroundColor: "var(--secondary-background)",
-        padding: "0.5rem",
-        marginBottom: "1rem",
-        alignItems: "center",
-        display: "flex",
-        gap: "var(--mui-spacing)",
-      }}
-    >
+    <Paper className={styles.filterBar}>
       <Tooltip title="Feed events filter">
         <div className={styles.barIconHolder}>
           <FilterAltIcon fontSize="large" />
         </div>
       </Tooltip>
-      <FeedStatusFilter
-        className={styles.filter}
-        value={filters.status}
-        onChange={setStatus}
-      />
-      <FeedSubjectFilter
-        className={styles.filter}
-        value={filters.subject}
-        onChange={setSubject}
-      />
-      <FeedDateFilter
-        label="Start date"
-        onChange={setStartDate}
-        value={filters.startDate}
-      />
-      <FeedDateFilter
-        label="End date"
-        onChange={setEndDate}
-        value={filters.endDate}
-      />
-
+      <div className={styles.filtersHolder}>
+        <FeedStatusFilter
+          className={styles.filter}
+          onChange={setStatus}
+          value={filters.status}
+        />
+        <FeedSubjectFilter
+          className={styles.filter}
+          onChange={setSubject}
+          value={filters.subject}
+        />
+        <FeedDateFilter
+          className={styles.filter}
+          label="Start date"
+          onChange={setStartDate}
+          value={filters.startDate}
+        />
+        <FeedDateFilter
+          className={styles.filter}
+          label="End date"
+          onChange={setEndDate}
+          value={filters.endDate}
+        />
+      </div>
       <Tooltip title="Clear filters">
-        <Button
-          variant="contained"
-          size="large"
-          className={styles.clearButton}
-          onClick={resetFilters}
-          disabled={!hasFilters}
-        >
-          <DeleteIcon />
-        </Button>
+        <span className={styles.clearButtonWrapper}>
+          <Button
+            variant="contained"
+            color="warning"
+            size="large"
+            className={styles.clearButton}
+            onClick={resetFilters}
+            disabled={!hasFilters}
+          >
+            <DeleteIcon />
+          </Button>
+        </span>
       </Tooltip>
     </Paper>
   );

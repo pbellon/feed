@@ -1,6 +1,6 @@
 import { EventSubjectText } from "@/lib/ui/EventSubject";
 import { FeedEventSubject } from "@feed/types";
-import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { SyntheticEvent, useCallback, useMemo } from "react";
 

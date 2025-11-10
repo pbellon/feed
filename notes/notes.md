@@ -1,10 +1,6 @@
 # TODO
 
 - affichage user dans le listing
-- Filter bar
-  - filter by date range
-  - button "clear filters"
-- Fix browser "back" / "next" history. Probably useEffect in FeedProvider
 - Optimization là où c'est possible
   - bundle
   - external resources loading
@@ -18,10 +14,10 @@
 - [x] squelette du front
 - [x] implem DB (create/fixtures)
 - [x] implem listing de base + pagination (back+front)
-- [ ] implem filtering (back+front)
+- [x] implem filtering (back+front)
   - [x] par status
   - [x] par subject
-  - [ ] par date
+  - [x] par date
 - suivant le temps:
   - tester le listing côté API (voir comment faire pour créer à la volée la DB in memory)
   - tester le front, à voir quoi, ça peut se jouer de dire je vais tester le listing avec un jeu de données mock via MSW

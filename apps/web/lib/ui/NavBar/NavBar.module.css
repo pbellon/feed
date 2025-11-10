@@ -1,6 +1,16 @@
 .navbar {
-  margin-bottom: 1rem;
+  margin-bottom: calc(var(--mui-spacing) * 2);
   background-color: var(--main-background);
   border-bottom: 2px solid var(--main-border-color);
-  padding-bottom: 1rem;
+  padding: calc(var(--mui-spacing) * 2) 0;
+}
+
+.separatorWrapper {
+  border-left: var(--mui-spacing) solid var(--link-color);
+  padding-left: calc(var(--mui-spacing) * 2);
+  margin-left: calc(var(--mui-spacing) * -1);
+
+  & :global(.MuiSelect-select) {
+    padding-top: 0;
+  }
 }
