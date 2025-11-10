@@ -10,8 +10,6 @@ import {
   type PaginationData,
   ApiErrorReplySchema,
   FeedEventSubject,
-  FeedSortableColumn,
-  SortOrder,
 } from "@feed/types";
 import Fastify from "fastify";
 import path from "node:path";

@@ -5,7 +5,6 @@ import { useFeedQuery } from "@/lib/hooks/useFeedQuery";
 import { EventStatusChip } from "@/lib/ui/EventStatus";
 import { FeedEvent } from "@feed/types";
 
-import Table from "@mui/material/Table";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
@@ -19,6 +18,7 @@ import { FeedTableSkeleton } from "./FeedTableSkeleton";
 import { FeedDateCellContent } from "./content/FeedDateCellContent";
 import { FeedSubjectCellContent } from "./content/FeedSubjectCellContent";
 import TableBody from "@mui/material/TableBody";
+import { FeedUserCellContent } from "./content/FeedUserCellContent";
 
 type FeedTableProps = {
   websiteId: string;
@@ -44,7 +44,9 @@ function FeedEventTableRow({ event }: Readonly<{ event: FeedEvent }>) {
           description={event.description}
         />
       </TableCell>
-      <TableCell>{event.user.fullName}</TableCell>
+      <TableCell>
+        <FeedUserCellContent user={event.user} />
+      </TableCell>
     </TableRow>
   );
 }
@@ -81,20 +83,26 @@ export function FeedTable({ websiteId }: FeedTableProps) {
   if (!isLoading && !isFetching && (data?.events ?? []).length == 0) {
     return (
       <>
-        <Box sx={{ padding: "calc(var(--mui-spacing) * 2)" }}>
-          <Typography variant="h4">No events found</Typography>
-          <Typography>Please remove some filters</Typography>
-        </Box>
         <FeedTableBase sort={sort} onSort={sortBy}>
+          <TableBody>
+            <TableRow>
+              <TableCell colSpan={5}>
+                <Typography variant="h4">No events found</Typography>
+                <Typography>Please remove some filters</Typography>
+              </TableCell>
+            </TableRow>
+          </TableBody>
           <TableFooter>
-            <TablePagination
-              count={data?.pagination.total ?? 0}
-              onPageChange={handlePageChange}
-              onRowsPerPageChange={handleRowsPerPageChange}
-              page={pagination.page}
-              rowsPerPage={pagination.pageSize}
-              rowsPerPageOptions={[5, 10, 25]}
-            />
+            <TableRow>
+              <TablePagination
+                count={data?.pagination.total ?? 0}
+                onPageChange={handlePageChange}
+                onRowsPerPageChange={handleRowsPerPageChange}
+                page={pagination.page}
+                rowsPerPage={pagination.pageSize}
+                rowsPerPageOptions={[5, 10, 25]}
+              />
+            </TableRow>
           </TableFooter>
         </FeedTableBase>
       </>
