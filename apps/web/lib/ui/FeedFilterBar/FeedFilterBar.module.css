@@ -1,5 +1,9 @@
 .filter {
-  background-color: var(--main-background);
+  & :global(.MuiInputBase-root),
+  & :global(.MuiPickersInputBase-root) {
+    background-color: var(--main-background);
+  }
+
   &:global(.MuiPickersTextField-root),
   &:global(.MuiAutocomplete-root) {
     min-width: 200px;

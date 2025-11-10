@@ -24,7 +24,7 @@ export function FeedFilterBar() {
   } = useFeedProvider();
   return (
     <Paper className={styles.filterBar}>
-      <Tooltip title="Feed events filter">
+      <Tooltip title="Feed events filter" placement="top">
         <div className={styles.barIconHolder}>
           <FilterAltIcon fontSize="large" />
         </div>
@@ -53,7 +53,7 @@ export function FeedFilterBar() {
           value={filters.endDate}
         />
       </div>
-      <Tooltip title="Clear filters">
+      <Tooltip title="Clear filters" placement="top">
         <span className={styles.clearButtonWrapper}>
           <Button
             variant="contained"
