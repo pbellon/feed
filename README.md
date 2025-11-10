@@ -33,7 +33,7 @@ Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expr
 Add-MpPreference -ExclusionPath $(pnpm store path)
 ```
 
-### 3. Build
+### 3. Build & init database
 
 You should then run an initial build, this is required in order to run the API.
 
@@ -43,6 +43,12 @@ Run this at the root of the repository:
 pnpm build
 # or
 pnpm --filter @feed/api build
+```
+
+Once the API built you can then init the database with
+
+```shell
+pnpm --filter @feed/api db:init
 ```
 
 ### 4. Run the app
