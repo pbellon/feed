@@ -2,7 +2,7 @@ import Paper from "@mui/material/Paper";
 
 import { metadataGenerator } from "@/lib/metadata";
 import TableContainer from "@mui/material/TableContainer";
-import FeedProvider from "@/lib/ui/FeedProvider";
+import FeedContextProvider from "@/lib/ui/FeedContext";
 import FeedFilterBar from "@/lib/ui/FeedFilterBar";
 import FeedTable from "@/lib/ui/FeedTable";
 
@@ -16,11 +16,11 @@ export default async function ActivityPage({
   const { websiteId } = await params;
 
   return (
-    <FeedProvider>
+    <FeedContextProvider>
       <FeedFilterBar />
       <TableContainer component={Paper}>
         <FeedTable websiteId={websiteId} />
       </TableContainer>
-    </FeedProvider>
+    </FeedContextProvider>
   );
 }

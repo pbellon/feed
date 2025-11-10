@@ -32,10 +32,24 @@
 
 - un peu quick & dirty pour setup la DB et pas beaucoup plus que ça
 
-- idéallement on pourrait avoir des systèmes plus évoluer pour mettre à jour les
+- idéallement on pourrait avoir des systèmes plus évolué pour mettre à jour les
   données lors du chargement des fixtures
 
-- avoir un système UP and DOWN pour les migration ou juste pouvoir cibler une migration spécifique
+- avoir un système de migration, là je suis allé au plus simple pour la démo
+
+## Bug connu sur les search params
+
+Si on met à la main un `page=100` par exemple dans les search params de l'URL ça va provoquer un cas
+limite un peu pénible puisqu'on ne peut pas facilement reset la page courante. J'ai fait le choix de
+ne pas le gérer dans cette démo pour éviter d'y passer trop de temps mais, dans l'absolu, il
+faudrait le prendre en compte.
+
+- soit en faisant un reset de cette page si on détecte que dans les données chargées qu'on ne
+  devrait pas être sur cette page, mais ça demande un peu de logique back / front et des màj
+
+- soit en autorisant l'utilisateur à revenir au début du tableau avec un système de pagination plus
+  customisé comme montré ici: https://mui.com/material-ui/react-table/#custom-pagination-actions
+  mais c'est pas non plus très satisfaisant car ça demande une action utilisateur.
 
 ## "Dockeriser" le tout
 

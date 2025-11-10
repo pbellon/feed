@@ -2,10 +2,10 @@
 
 import { use } from "react";
 
-import { type FeedProviderContextState } from "@/lib/ui/FeedProvider/types";
-import { FeedProviderContext } from "@/lib/ui/FeedProvider/FeedProviderContext";
+import { type FeedContextValue } from "@/lib/ui/FeedContext/types";
+import { FeedProviderContext } from "@/lib/ui/FeedContext/FeedContext";
 
-export function useFeedProvider(): FeedProviderContextState {
+export function useFeedProvider(): FeedContextValue {
   const ctx = use(FeedProviderContext);
   if (!ctx)
     throw new Error("useFeedProvider must be used within <FeedProvider>");

@@ -1,9 +1,9 @@
-import { act, Reducer } from "react";
+import { Reducer } from "react";
 import {
-  FeedProviderAction,
+  FeedContextAction,
   FeedProviderActionKind,
   FeedProviderPagination,
-  FeedProviderState,
+  FeedContextState,
 } from "./types";
 
 function resetPage(pagination: FeedProviderPagination): FeedProviderPagination {
@@ -13,7 +13,7 @@ function resetPage(pagination: FeedProviderPagination): FeedProviderPagination {
   };
 }
 
-export const reducer: Reducer<FeedProviderState, FeedProviderAction> = (
+export const reducer: Reducer<FeedContextState, FeedContextAction> = (
   state,
   action
 ) => {

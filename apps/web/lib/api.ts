@@ -1,6 +1,5 @@
 import type { FeedEventsReply, FeedEventsQuery, Website } from "@feed/types";
 import { constructSearchParams } from "./searchParams";
-import { convertDateForApi } from "./date";
 
 const baseUrl = process.env.API_BASE_URL ?? "http://localhost:8080";
 
@@ -26,8 +25,8 @@ export async function getEvents(
     page: query.page?.toString(),
     pageSize: query.pageSize?.toString(),
     subject: query.subject,
-    startDate: query.startDate ? convertDateForApi(query.startDate) : undefined,
-    endDate: query.endDate ? convertDateForApi(query.endDate) : undefined,
+    startDate: query.startDate,
+    endDate: query.endDate,
     status: query.status,
   });
 

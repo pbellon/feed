@@ -74,10 +74,24 @@ export function FeedTable({ websiteId }: FeedTableProps) {
 
   if (!isLoading && !isFetching && (data?.events ?? []).length == 0) {
     return (
-      <Box sx={{ padding: "calc(var(--mui-spacing) * 2)" }}>
-        <Typography variant="h4">No events found</Typography>
-        <Typography>Please remove some filters</Typography>
-      </Box>
+      <>
+        <Box sx={{ padding: "calc(var(--mui-spacing) * 2)" }}>
+          <Typography variant="h4">No events found</Typography>
+          <Typography>Please remove some filters</Typography>
+        </Box>
+        <Table>
+          <TableFooter>
+            <TablePagination
+              count={data?.pagination.total ?? 0}
+              onPageChange={handlePageChange}
+              onRowsPerPageChange={handleRowsPerPageChange}
+              page={pagination.page}
+              rowsPerPage={pagination.pageSize}
+              rowsPerPageOptions={[5, 10, 25]}
+            />
+          </TableFooter>
+        </Table>
+      </>
     );
   }
 

@@ -3,7 +3,6 @@
 import { FeedEventStatus, FeedEventSubject } from "@feed/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
-  createContext,
   useCallback,
   useEffect,
   useMemo,
@@ -12,17 +11,15 @@ import {
   useState,
 } from "react";
 import { reducer } from "./reducer";
-import { FeedProviderActionKind, FeedProviderContextState } from "./types";
+import { FeedProviderActionKind, FeedContextValue } from "./types";
 import { parseEventSearchParams } from "./utils";
+import { FeedProviderContext } from "./FeedContext";
 
 type FeedProviderProps = {
   children: React.ReactNode;
 };
 
-export const FeedProviderContext =
-  createContext<FeedProviderContextState | null>(null);
-
-export function FeedProvider({ children }: FeedProviderProps) {
+export function FeedContextProvider({ children }: FeedProviderProps) {
   const sp = useSearchParams();
   const router = useRouter();
 
@@ -96,7 +93,7 @@ export function FeedProvider({ children }: FeedProviderProps) {
     state.filters.subject,
   ]);
 
-  const value = useMemo<FeedProviderContextState>(
+  const value = useMemo<FeedContextValue>(
     () => ({
       filters: state.filters,
       pagination: state.pagination,

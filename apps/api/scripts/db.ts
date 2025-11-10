@@ -127,6 +127,8 @@ function loadFixtures(db: Sqlite3Database.Database) {
         insertUser.run(user.id, user.name);
       });
 
+      // disabled because we're on the fixture loading script, not in running code
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       fixtures.events.forEach((event: any) => {
         insertEvent.run(
           event.id,

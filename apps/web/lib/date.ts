@@ -5,6 +5,7 @@
 import { parse } from "date-fns/parse";
 import { formatISO } from "date-fns/formatISO";
 import { format } from "date-fns/format";
+import { isValid } from "date-fns/isValid";
 
 // Format that will be used to store date in state & in URL for deep linking
 export const LOCAL_DATE_FORMAT = "dd-MM-yyyy";
@@ -18,7 +19,11 @@ export const LOCAL_DATE_FORMAT = "dd-MM-yyyy";
 export function parseLocalDate(dateString: string | ""): Date | undefined {
   if (dateString === "") return undefined;
   try {
-    return parse(dateString, LOCAL_DATE_FORMAT, new Date());
+    const date = parse(dateString, LOCAL_DATE_FORMAT, new Date());
+    if (isValid(date)) {
+      return date;
+    }
+    return undefined;
   } catch (err) {
     console.error("An error occured during date parsing", err);
     return undefined;

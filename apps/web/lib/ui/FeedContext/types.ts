@@ -12,16 +12,23 @@ export type FeedProviderPagination = {
   pageSize: number;
 };
 
-export type FeedProviderState = {
+/**
+ * Main state that will control the filter bar & pagination states
+ */
+export type FeedContextState = {
   filters: FeedProviderFilters;
   pagination: FeedProviderPagination;
 };
 
-export type FeedProviderStateAndDerivated = FeedProviderState & {
+/**
+ * State derived from {@link FeedContextState} including computed attributes
+ * based on main state.
+ */
+export type FeedContextStateAndDerived = FeedContextState & {
   hasFilters: boolean;
 };
 
-export type FeedProviderCallbacks = {
+export type FeedContextCallbacks = {
   resetFilters: () => void;
 
   setStatus: (status: FeedEventStatus | "") => void;
@@ -34,8 +41,9 @@ export type FeedProviderCallbacks = {
   setPageSize: (pageSize: number) => void;
 };
 
-export type FeedProviderContextState = FeedProviderStateAndDerivated &
-  FeedProviderCallbacks;
+// Full context value including state & callbacks
+export type FeedContextValue = FeedContextStateAndDerived &
+  FeedContextCallbacks;
 
 export enum FeedProviderActionKind {
   // filters related actions
@@ -91,10 +99,10 @@ type SetPageSizeAction = {
 
 type UpdateStateAction = {
   type: FeedProviderActionKind.UPDATE_STATE;
-  payload: FeedProviderState;
+  payload: FeedContextState;
 };
 
-export type FeedProviderAction =
+export type FeedContextAction =
   | ResetFiltersAction
   | SetSubjectAction
   | SetStatusAction

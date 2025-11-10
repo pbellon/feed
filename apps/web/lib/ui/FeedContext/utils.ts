@@ -1,10 +1,15 @@
 import { FeedEventStatus, FeedEventSubject } from "@feed/types";
 
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { FeedProviderState } from "./types";
+import { FeedContextState } from "./types";
+import { parseLocalDate } from "@/lib/date";
 
-function parseString(param: string | null): string | undefined {
-  if (param) {
+function parseDate(param: string | null): string | undefined {
+  if (param === null) {
+    return undefined;
+  }
+  const date = parseLocalDate(param);
+  if (date) {
     return param;
   }
   return undefined;
@@ -26,25 +31,29 @@ function parseEventSubject(param: string | null): FeedEventSubject | undefined {
   return undefined;
 }
 
-function parsePositiveInt(param: string | null): number | undefined {
+function parsePositiveInt(
+  param: string | null,
+  max?: number
+): number | undefined {
   if (param && typeof param === "string") {
     const nb = parseInt(param, 10);
     if (!isNaN(nb) && nb >= 0) {
-      return nb;
+      if (max && nb > max) return max;
     }
+    return nb;
   }
   return undefined;
 }
 
 export function parseEventSearchParams(
   params: ReadonlyURLSearchParams
-): FeedProviderState {
-  const startDate = parseString(params.get("startDate"));
-  const endDate = parseString(params.get("endDate"));
+): FeedContextState {
+  const startDate = parseDate(params.get("startDate"));
+  const endDate = parseDate(params.get("endDate"));
   const status = parseEventStatus(params.get("status"));
   const subject = parseEventSubject(params.get("subject"));
   const page = parsePositiveInt(params.get("page"));
-  const pageSize = parsePositiveInt(params.get("pageSize"));
+  const pageSize = parsePositiveInt(params.get("pageSize"), 25);
 
   return {
     filters: {

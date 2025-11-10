@@ -2,7 +2,7 @@ import { getEvents } from "@/lib/api";
 import {
   type FeedProviderFilters,
   type FeedProviderPagination,
-} from "@/lib/ui/FeedProvider/types";
+} from "@/lib/ui/FeedContext/types";
 import {
   FeedEventsQuery,
   FeedEventsReply,
@@ -11,6 +11,7 @@ import {
 } from "@feed/types";
 import { type UseQueryResult, useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { convertDateForApi } from "../date";
 
 type UseFeedQueryParams = {
   websiteId: string;
@@ -22,8 +23,12 @@ const asFeedQuerystring = (
   filters: FeedProviderFilters,
   pagination: FeedProviderPagination
 ): FeedEventsQuery => ({
-  endDate: filters.endDate.length > 0 ? filters.endDate : undefined,
-  startDate: filters.startDate.length > 0 ? filters.startDate : undefined,
+  endDate:
+    filters.endDate.length > 0 ? convertDateForApi(filters.endDate) : undefined,
+  startDate:
+    filters.startDate.length > 0
+      ? convertDateForApi(filters.startDate)
+      : undefined,
   status:
     filters.status.length > 0 ? (filters.status as FeedEventStatus) : undefined,
   subject:
