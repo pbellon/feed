@@ -1,16 +1,16 @@
-import { type UseQueryResult, useQuery } from "@tanstack/react-query";
+import { getEvents } from "@/lib/api";
 import {
-  FeedProviderFilters,
-  FeedProviderPagination,
-} from "../components/FeedProvider/types";
+  type FeedProviderFilters,
+  type FeedProviderPagination,
+} from "@/lib/ui/FeedProvider/types";
 import {
   FeedEventsQuery,
   FeedEventsReply,
   FeedEventStatus,
   FeedEventSubject,
 } from "@feed/types";
+import { type UseQueryResult, useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { getEvents } from "@/lib/api";
 
 type UseFeedQueryParams = {
   websiteId: string;

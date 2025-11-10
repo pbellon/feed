@@ -1,5 +1,6 @@
 "use client";
 
+import { EventStatusChip } from "@/lib/ui/EventStatus";
 import { FeedEvent } from "@feed/types";
 import {
   TableBody,
@@ -9,15 +10,14 @@ import {
   Typography,
 } from "@mui/material";
 import Table from "@mui/material/Table";
-import TableCell from "node_modules/@mui/material/TableCell";
-import { useFeedProvider } from "../FeedProvider";
-import { useFeedQuery } from "../../hooks/useFeedQuery";
-import { FeedTableSkeleton } from "./FeedTableSkeleton";
-import { useCallback } from "react";
-import { FeedSubjectCellContent } from "./FeedSubjectCellContent";
 import Box from "node_modules/@mui/material/Box";
-import { FeedDateCellContent } from "./FeedDateCellContent";
-import { EventStatusChip } from "@/lib/ui/EventStatus";
+import TableCell from "node_modules/@mui/material/TableCell";
+import { useCallback } from "react";
+import { FeedDateCellContent } from "./content/FeedDateCellContent";
+import { FeedSubjectCellContent } from "./content/FeedSubjectCellContent";
+import { FeedTableSkeleton } from "./FeedTableSkeleton";
+import { useFeedProvider } from "@/lib/hooks/useFeedProvider";
+import { useFeedQuery } from "@/lib/hooks/useFeedQuery";
 
 type FeedTableProps = {
   websiteId: string;

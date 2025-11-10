@@ -2,15 +2,15 @@
 
 import Paper from "@mui/material/Paper";
 import FilterAltIcon from "@mui/icons-material/FilterAltOutlined";
-import { useFeedProvider } from "../FeedProvider";
-import { FeedStatusFilter } from "./FeedStatusFilter";
-import { FeedSubjectFilter } from "./FeedSubjectFilter";
+import { FeedStatusFilter } from "./filters/FeedStatusFilter";
+import { FeedSubjectFilter } from "./filters/FeedSubjectFilter";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Tooltip from "@mui/material/Tooltip";
 
 import styles from "./FeedFilterBar.module.css";
-import { FeedDateFilter } from "./FeedDateFilter";
+import { FeedDateFilter } from "./filters/FeedDateFilter";
 import Button from "@mui/material/Button";
+import { useFeedProvider } from "../../hooks/useFeedProvider";
 
 export function FeedFilterBar() {
   const {

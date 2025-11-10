@@ -3,7 +3,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import { FeedSubjectCellContentSkeleton } from "./FeedSubjectCellContent";
+import { FeedSubjectCellContentSkeleton } from "./content/FeedSubjectCellContent";
 
 function SkeletonTableRows({ nbRows }: { nbRows: number }) {
   return [...Array(nbRows)].map((_, index) => (

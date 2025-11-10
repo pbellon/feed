@@ -1,8 +1,9 @@
 "use client";
 
 import { use } from "react";
-import { FeedProviderContext } from "./FeedProvider";
-import { FeedProviderContextState } from "./types";
+
+import { type FeedProviderContextState } from "@/lib/ui/FeedProvider/types";
+import { FeedProviderContext } from "@/lib/ui/FeedProvider/FeedProviderContext";
 
 export function useFeedProvider(): FeedProviderContextState {
   const ctx = use(FeedProviderContext);

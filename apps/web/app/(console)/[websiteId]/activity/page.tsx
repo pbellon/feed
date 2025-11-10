@@ -2,9 +2,9 @@ import Paper from "@mui/material/Paper";
 
 import { metadataGenerator } from "@/lib/metadata";
 import TableContainer from "@mui/material/TableContainer";
-import { FeedTable } from "./components/FeedTable/FeedTable";
-import FeedProvider from "./components/FeedProvider";
-import FeedFilterBar from "./components/FeedFilterBar";
+import FeedProvider from "@/lib/ui/FeedProvider";
+import FeedFilterBar from "@/lib/ui/FeedFilterBar";
+import FeedTable from "@/lib/ui/FeedTable";
 
 export const generateMetadata = metadataGenerator("Activity feed");
 
