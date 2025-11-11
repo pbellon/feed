@@ -94,3 +94,33 @@ main parts that handle this feature:
 | `apps/web/lib/FeedContext/`                            | Centralize the state management for filtering, pagination & sorting logic related to activity feed |
 | `apps/web/lib/ui/FeedTable/`                           | Handle the feed table display + sort & pagination UI logic                                         |
 | `apps/web/lib/ui/FeedFitlerBar/`                       | Handle all filtering UI logic related to `FeedContext`                                             |
+
+
+## Demo
+Please note that a fake latency delay has been added to showcase various pending states (initial loading vs pending etc).
+
+### Sorting 
+
+https://github.com/user-attachments/assets/ca75f9c0-9e4a-49e5-9c41-1e2e556404c2
+
+### Filtering
+> Here we can notice that deep linking works seemlessly with browser previous/next buttons
+
+https://github.com/user-attachments/assets/8c116f59-1ecd-4ed1-95f4-3d411d7c8e14
+
+### Pagination
+> Here we can notice that that current page get reset when filter changes to avoid displaying an empty page
+
+https://github.com/user-attachments/assets/f1c93a9d-81a2-4c6c-b92a-a337a29d077b
+
+### Navigation / Routing
+> Here we can notice the initial state of a table in "Skeleton mode", after that we have a more subtle way of handling pending state by keeping previously loaded data visible
+
+https://github.com/user-attachments/assets/8c014ace-c61e-46b0-8391-c1edc790ae47
+
+
+### Bonus: responsive filter bar
+Wasn't asked but I wanted to showcase how we could handle a responsive filter bar display
+
+https://github.com/user-attachments/assets/1d354a85-9921-464e-86c9-63f663fb0c7d
+
