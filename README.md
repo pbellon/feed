@@ -27,7 +27,7 @@ cd feed
 
 ### 2. Install `node` & `pnpm`
 
-We won't cover how to install [NodeJS]() but I suggest using the "lts/krypton" version via [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating):
+We won't cover how to install NodeJS but I suggest using the "lts/krypton" version via [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating):
 
 ```shell
 nvm install lts/krypton
