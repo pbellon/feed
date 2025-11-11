@@ -6,6 +6,18 @@ This project is a recruitement exercise. This is not designed to be used in the 
 
 This guide covers how to get & start the project.
 
+### TL;DR
+
+```shell
+git clone https://github.com/pbellon/feed
+cd feed
+# you need pnpm installed, check `2. Install pnpm` if you don't have it
+pnpm install # install all deps
+pnpm build # run an initial build, necessary for the apps/api nodejs app
+pnpm db:init # initialize the DB with some data
+pnpm dev # or `pnpm start` to start in "production" mode
+```
+
 ### 1. Clone the project
 
 ```shell
@@ -25,7 +37,7 @@ curl -fsSL https://get.pnpm.io/install.sh | sh -
 wget -qO- https://get.pnpm.io/install.sh | sh -
 ```
 
-On Windows:
+On Windows (powershell):
 
 ```powershell
 Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
@@ -43,12 +55,8 @@ Run this at the root of the repository:
 pnpm build
 # or
 pnpm --filter @feed/api build
-```
-
-Once the API built you can then init the database with
-
-```shell
-pnpm --filter @feed/api db:init
+# Once the API built you can then init the database with
+pnpm db:init
 ```
 
 ### 4. Run the app
@@ -61,6 +69,8 @@ pnpm dev
 
 # or in "prod" mode
 pnpm build && pnpm start
+
+# At this point you can open http://localhost:3000 in your browser
 ```
 
 ## Project structure
@@ -70,3 +80,17 @@ The main parts of the app are:
 - `apps/web` next.js frontend app
 - `apps/api` fastify API application
 - `packages/types` shared types & schemas between the front and the API
+- `packages/eslint-config` shared configs for eslint
+
+### Points of interest for the exercise
+
+Since the goal of the project is to implement filtering on the "Activity feed" page, here are the
+main parts that handle this feature:
+
+| File                                                   | Description                                                                                        |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| `apps/web/app/(console)/[websiteId]/layout.tsx`        | Shared layout containing the website selector and overall navigation between tabs                  |
+| `apps/web/app/(console)/[websiteId]/activity/page.tsx` | Page entry point for next.js                                                                       |
+| `apps/web/lib/FeedContext/`                            | Centralize the state management for filtering, pagination & sorting logic related to activity feed |
+| `apps/web/lib/ui/FeedTable/`                           | Handle the feed table display + sort & pagination UI logic                                         |
+| `apps/web/lib/ui/FeedFitlerBar/`                       | Handle all filtering UI logic related to `FeedContext`                                             |

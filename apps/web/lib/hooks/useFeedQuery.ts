@@ -13,7 +13,7 @@ import type {
   FeedContextSort,
   FeedContextFilters,
   FeedContextPagination,
-} from "@/lib/ui/FeedContext/types";
+} from "@/lib/FeedContext/types";
 
 import { convertDateForApi } from "../date";
 
@@ -27,7 +27,7 @@ type UseFeedQueryParams = {
 const asFeedQuerystring = (
   filters: FeedContextFilters,
   pagination: FeedContextPagination,
-  sort: FeedContextSort,
+  sort: FeedContextSort
 ): FeedEventsQuery => ({
   endDate:
     filters.endDate.length > 0 ? convertDateForApi(filters.endDate) : undefined,
@@ -48,12 +48,12 @@ const asFeedQuerystring = (
 });
 
 export function useFeedQuery(
-  params: UseFeedQueryParams,
+  params: UseFeedQueryParams
 ): UseQueryResult<FeedEventsReply> {
   const query = useMemo(
     (): FeedEventsQuery =>
       asFeedQuerystring(params.filters, params.pagination, params.sort),
-    [params.filters, params.pagination, params.sort],
+    [params.filters, params.pagination, params.sort]
   );
 
   return useQuery({

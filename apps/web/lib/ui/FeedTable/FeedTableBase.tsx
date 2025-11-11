@@ -7,7 +7,7 @@ import { useMemo } from "react";
 
 import { FeedSortableColumn, SortOrder } from "@feed/types";
 
-import { type FeedContextSort } from "../FeedContext/types";
+import { type FeedContextSort } from "../../FeedContext/types";
 
 type FeedTableBaseProps = {
   children: React.ReactNode;

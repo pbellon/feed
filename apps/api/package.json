@@ -26,10 +26,8 @@
   "devDependencies": {
     "@feed/eslint-config": "workspace:*",
     "@feed/types": "workspace:*",
-    "@types/better-sqlite3": "^7.6.13",
-    "@types/node": "^22.15.3",
-    "eslint": "9.39.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "@types/better-sqlite3": "7.6.13",
+    "@types/node": "22.15.3",
+    "ts-node": "10.9.2"
   }
 }

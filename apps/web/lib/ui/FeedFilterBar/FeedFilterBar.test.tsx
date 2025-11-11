@@ -10,7 +10,10 @@ import {
 } from "@feed/types";
 
 import { FeedFilterBar } from "./FeedFilterBar";
-import { FeedContextCallbacks, FeedContextState } from "../FeedContext/types";
+import {
+  FeedContextCallbacks,
+  FeedContextState,
+} from "../../FeedContext/types";
 
 const setStatusMock = vi.fn();
 const setSubjectMock = vi.fn();
