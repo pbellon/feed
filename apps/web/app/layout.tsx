@@ -5,7 +5,8 @@ import { Roboto } from "next/font/google";
 
 import "./globals.css";
 
-import ReactQueryProvider from "./ReactQueryProvider";
+import ReactQueryProvider from "@/lib/ReactQueryProvider";
+
 import theme from "./theme";
 
 const roboto = Roboto({
