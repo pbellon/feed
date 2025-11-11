@@ -19,6 +19,7 @@ type FeedTableBaseProps = {
 type FeedTableHeader = {
   active: boolean;
   column?: FeedSortableColumn;
+  width: string;
   direction: SortOrder;
   name: string;
   onSort: ((e: React.MouseEvent<unknown>) => void) | undefined;
@@ -37,11 +38,19 @@ export function FeedTableBase({
 }: FeedTableBaseProps) {
   const headers = useMemo((): FeedTableHeader[] => {
     const baseHeaders = [
-      { name: "Created at", column: FeedSortableColumn.CREATED_AT },
-      { name: "Updated at", column: FeedSortableColumn.UPDATED_AT },
-      { name: "Status", column: FeedSortableColumn.STATUS },
-      { name: "Subject", column: FeedSortableColumn.SUBJECT },
-      { name: "User" },
+      {
+        name: "Created at",
+        column: FeedSortableColumn.CREATED_AT,
+        width: "15%",
+      },
+      {
+        name: "Updated at",
+        column: FeedSortableColumn.UPDATED_AT,
+        width: "15%",
+      },
+      { name: "Status", column: FeedSortableColumn.STATUS, width: "10%" },
+      { name: "Subject", column: FeedSortableColumn.SUBJECT, width: "35%" },
+      { name: "User", width: "25%" },
     ];
 
     return baseHeaders.map((col) => {
@@ -74,6 +83,7 @@ export function FeedTableBase({
           {headers.map((header) => (
             <TableCell
               key={header.name}
+              width={header.width}
               sortDirection={
                 header.active ? (sort?.order ?? SortOrder.ASCENDING) : false
               }

@@ -4,6 +4,7 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 
 import { FeedSubjectCellContentSkeleton } from "./content/FeedSubjectCellContent";
+import { FeedUserCellContentSkeleton } from "./content/FeedUserCellContent";
 import { FeedTableBase } from "./FeedTableBase";
 
 function SkeletonTableRows({ nbRows }: { nbRows: number }) {
@@ -27,7 +28,7 @@ function SkeletonTableRows({ nbRows }: { nbRows: number }) {
         <FeedSubjectCellContentSkeleton />
       </TableCell>
       <TableCell>
-        <Skeleton animation="wave" variant="text" />
+        <FeedUserCellContentSkeleton />
       </TableCell>
     </TableRow>
   ));

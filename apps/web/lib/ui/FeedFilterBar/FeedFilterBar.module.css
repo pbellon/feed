@@ -1,3 +1,22 @@
+.filterBar {
+  padding: var(--mui-spacing);
+  margin-bottom: calc(var(--mui-spacing) * 2);
+  display: flex;
+  gap: var(--mui-spacing);
+  align-items: center;
+
+  &:global(.MuiPaper-root) {
+    background-color: var(--secondary-background);
+  }
+}
+
+.filtersHolder {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mui-spacing);
+  flex-grow: 1;
+}
+
 .filter {
   & :global(.MuiInputBase-root),
   & :global(.MuiPickersInputBase-root) {
@@ -25,25 +44,6 @@
     padding-left: var(--mui-spacing);
     padding-right: var(--mui-spacing);
   }
-}
-
-.filterBar {
-  padding: var(--mui-spacing);
-  margin-bottom: calc(var(--mui-spacing) * 2);
-  display: flex;
-  gap: var(--mui-spacing);
-  align-items: center;
-
-  &:global(.MuiPaper-root) {
-    background-color: var(--secondary-background);
-  }
-}
-
-.filtersHolder {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--mui-spacing);
-  flex-grow: 1;
 }
 
 @media screen and (max-width: 640px) {

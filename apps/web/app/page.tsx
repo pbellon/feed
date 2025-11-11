@@ -1,20 +1,10 @@
 import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import { getWebsites } from "@/lib/api";
-
-export const dynamic = "force-dynamic";
-
-function LoadingPlaceholder() {
-  return (
-    <Box sx={{ display: "flex" }}>
-      <CircularProgress />
-    </Box>
-  );
-}
+import { LoadingPlaceholder } from "@/lib/ui/LoadingPlaceholder";
 
 /**
  * Actual component doing fetch & redirect logic that can be wrapped in

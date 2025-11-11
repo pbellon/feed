@@ -1,6 +1,7 @@
 import Container from "@mui/material/Container";
 import { Suspense } from "react";
 
+import { LoadingPlaceholder } from "@/lib/ui/LoadingPlaceholder";
 import NavBar, { NavBarSkeleton } from "@/lib/ui/NavBar";
 
 type ConsoleLayoutProps = Readonly<{
@@ -8,10 +9,7 @@ type ConsoleLayoutProps = Readonly<{
   params: Promise<{ websiteId: string }>;
 }>;
 
-export default async function ConsoleLayout({
-  children,
-  params,
-}: ConsoleLayoutProps) {
+async function Layout({ children, params }: ConsoleLayoutProps) {
   const { websiteId } = await params;
   return (
     <>
@@ -23,5 +21,16 @@ export default async function ConsoleLayout({
         <Container>{children}</Container>
       </main>
     </>
+  );
+}
+
+export default function ConsoleLayout({
+  children,
+  params,
+}: ConsoleLayoutProps) {
+  return (
+    <Suspense fallback={<LoadingPlaceholder />}>
+      <Layout params={params}>{children}</Layout>
+    </Suspense>
   );
 }
