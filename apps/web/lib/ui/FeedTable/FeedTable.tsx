@@ -67,14 +67,14 @@ export function FeedTable({ websiteId }: FeedTableProps) {
     (_: unknown, newPage: number) => {
       setPage(newPage);
     },
-    [setPage],
+    [setPage]
   );
 
   const handleRowsPerPageChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPageSize(parseInt(e.target.value, 10));
     },
-    [setPageSize],
+    [setPageSize]
   );
 
   if (!data && isLoading) {
@@ -83,30 +83,28 @@ export function FeedTable({ websiteId }: FeedTableProps) {
 
   if (!isLoading && !isFetching && (data?.events ?? []).length == 0) {
     return (
-      <>
-        <FeedTableBase sort={sort} onSort={sortBy}>
-          <TableBody>
-            <TableRow>
-              <TableCell colSpan={5}>
-                <Typography variant="h4">No events found</Typography>
-                <Typography>Please remove some filters</Typography>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                count={data?.pagination.total ?? 0}
-                onPageChange={handlePageChange}
-                onRowsPerPageChange={handleRowsPerPageChange}
-                page={pagination.page}
-                rowsPerPage={pagination.pageSize}
-                rowsPerPageOptions={[5, 10, 25]}
-              />
-            </TableRow>
-          </TableFooter>
-        </FeedTableBase>
-      </>
+      <FeedTableBase sort={sort} onSort={sortBy}>
+        <TableBody>
+          <TableRow>
+            <TableCell colSpan={5}>
+              <Typography variant="h4">No events found</Typography>
+              <Typography>Please remove some filters</Typography>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              count={data?.pagination.total ?? 0}
+              onPageChange={handlePageChange}
+              onRowsPerPageChange={handleRowsPerPageChange}
+              page={pagination.page}
+              rowsPerPage={pagination.pageSize}
+              rowsPerPageOptions={[5, 10, 25]}
+            />
+          </TableRow>
+        </TableFooter>
+      </FeedTableBase>
     );
   }
 

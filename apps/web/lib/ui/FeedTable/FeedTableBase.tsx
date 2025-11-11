@@ -17,12 +17,27 @@ type FeedTableBaseProps = {
 };
 
 type FeedTableHeader = {
+  /** Represents if the column is currently used as sort column */
   active: boolean;
-  column?: FeedSortableColumn;
+  /** Width of the column */
   width: string;
+  /**
+   * Current sort order for this column, depends on {@link FeedTableBaseProps.sort}.
+   * Either ascending or descending.
+   */
   direction: SortOrder;
+  /**
+   * Visual name of the column
+   */
   name: string;
+  /**
+   * Handler called when sort icon is clicked. Will call {@link FeedTableBaseProps.onSort} with
+   * proper {@link FeedSortableColumn} set.
+   */
   onSort: ((e: React.MouseEvent<unknown>) => void) | undefined;
+  /**
+   * Explicit boolean saying if the column can be used for sorting feeds
+   */
   sortable: boolean;
 };
 
@@ -53,25 +68,29 @@ export function FeedTableBase({
       { name: "User", width: "25%" },
     ];
 
-    return baseHeaders.map((col) => {
-      const onSortHandler =
-        col.column && onSort
-          ? (_: React.MouseEvent<unknown>) => {
-              onSort(col.column);
-            }
-          : undefined;
+    return baseHeaders.map((col): FeedTableHeader => {
+      let onSortHandler = undefined;
+      let direction = SortOrder.ASCENDING;
+      let active = false;
 
-      const direction =
-        sort?.column === col.column
-          ? (sort?.order ?? SortOrder.ASCENDING)
-          : SortOrder.ASCENDING;
+      if (col.column && onSort) {
+        onSortHandler = (_: React.MouseEvent<unknown>) => {
+          onSort(col.column);
+        };
+      }
+
+      if (sort?.column === col.column) {
+        active = true;
+        direction = sort?.order ?? SortOrder.ASCENDING;
+      }
 
       return {
-        ...col,
-        sortable: col.column !== undefined,
-        active: sort?.column === col.column,
-        onSort: onSortHandler,
+        active,
         direction,
+        name: col.name,
+        onSort: onSortHandler,
+        sortable: col.column !== undefined,
+        width: col.width,
       };
     });
   }, [onSort, sort?.column, sort?.order]);
