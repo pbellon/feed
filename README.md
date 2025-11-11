@@ -6,7 +6,7 @@ This project is a recruitement exercise. This is not designed to be used in the 
 
 This guide covers how to get & start the project.
 
-### TL;DR
+### TL;DR / Quickstart
 
 ```shell
 git clone https://github.com/pbellon/feed
@@ -14,7 +14,7 @@ cd feed
 # you need pnpm installed, check `2. Install pnpm` if you don't have it
 pnpm install # install all deps
 pnpm build # run an initial build, necessary for the apps/api nodejs app
-pnpm db:init # initialize the DB with some data
+pnpm init-db # initialize the DB with some data
 pnpm dev # or `pnpm start` to start in "production" mode
 ```
 
@@ -52,11 +52,9 @@ You should then run an initial build, this is required in order to run the API.
 Run this at the root of the repository:
 
 ```shell
-pnpm build
-# or
-pnpm --filter @feed/api build
+pnpm build # or `pnpm --filter @feed/api build`
 # Once the API built you can then init the database with
-pnpm db:init
+pnpm init-db
 ```
 
 ### 4. Run the app
@@ -78,7 +76,7 @@ pnpm build && pnpm start
 The main parts of the app are:
 
 - `apps/web` next.js frontend app
-- `apps/api` fastify API application
+- `apps/api` fastify API application + SQLite database
 - `packages/types` shared types & schemas between the front and the API
 - `packages/eslint-config` shared configs for eslint
 

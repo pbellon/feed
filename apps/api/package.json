@@ -4,12 +4,10 @@
   "description": "This project was bootstrapped with Fastify-CLI.",
   "main": "server.ts",
   "scripts": {
-    "db:init": "ts-node scripts/db.ts all",
-    "db:migrate": "ts-node scripts/db.ts migrate",
-    "db:fixtures": "ts-node scripts/db.ts fixtures",
-    "check-types": "tsc --noEmit",
     "build": "tsc -p tsconfig.json",
+    "check-types": "tsc --noEmit",
     "dev": "node dist/server.js",
+    "init-db": "ts-node scripts/db.ts all",
     "lint": "eslint --max-warnings 0",
     "start": "node dist/server.js"
   },

@@ -4,7 +4,7 @@
   "scripts": {
     "build": "turbo run build",
     "check-types": "turbo run check-types",
-    "db:init": "pnpm --filter @feed/api db:init",
+    "init-db": "pnpm --filter @feed/api init-db",
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint:fix": "turbo run lint -- --fix",
