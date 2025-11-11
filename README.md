@@ -18,14 +18,18 @@ pnpm init-db # initialize the DB with some data
 pnpm dev # or `pnpm start` to start in "production" mode
 ```
 
-### 1. Clone the project
+### Detailed install process
+
+No need to follow this process if you have already gone through the Quickstart.
+
+#### 1. Clone the project
 
 ```shell
 git clone https://github.com/pbellon/feed
 cd feed
 ```
 
-### 2. Install `node` & `pnpm`
+#### 2. Install `node` & `pnpm`
 
 We won't cover how to install NodeJS but I suggest using the "lts/krypton" version via [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating):
 
@@ -52,7 +56,7 @@ Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expr
 Add-MpPreference -ExclusionPath $(pnpm store path)
 ```
 
-### 3. Build & init database
+#### 3. Build & init database
 
 You should then run an initial build, this is required in order to run the API.
 
@@ -64,7 +68,7 @@ pnpm build # or `pnpm --filter @feed/api build`
 pnpm init-db
 ```
 
-### 4. Run the app
+#### 4. Run the app
 
 Once the API built you can start the app and open [localhost:3000](http://localhost:3000) in your browser.
 
