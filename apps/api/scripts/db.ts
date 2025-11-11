@@ -18,14 +18,14 @@ function init(db: Sqlite3Database.Database) {
         `CREATE TABLE IF NOT EXISTS users (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           fullname TEXT NOT NULL
-        )`
+        )`,
       ).run();
 
       db.prepare(
         `CREATE TABLE IF NOT EXISTS websites (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           domain TEXT NOT NULL
-        )`
+        )`,
       ).run();
 
       db.prepare(
@@ -76,7 +76,7 @@ function init(db: Sqlite3Database.Database) {
           -- incomplete mapping, should create dedicated table
           project_id INTEGER,
           application_id TEXT
-      )`
+      )`,
       ).run();
     });
 
@@ -100,13 +100,13 @@ function loadFixtures(db: Sqlite3Database.Database) {
     const insertWebsite = db.prepare(
       `INSERT INTO websites (id, domain)
       VALUES (?, ?)
-      ON CONFLICT(id) DO NOTHING`
+      ON CONFLICT(id) DO NOTHING`,
     );
 
     const insertUser = db.prepare(
       `INSERT INTO users (id, fullname)
       VALUES (?, ?)
-      ON CONFLICT(id) DO NOTHING`
+      ON CONFLICT(id) DO NOTHING`,
     );
 
     const insertEvent = db.prepare(
@@ -116,7 +116,7 @@ function loadFixtures(db: Sqlite3Database.Database) {
         information, project_id, application_id
       ) VALUES (
         ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-      ) ON CONFLICT(id) DO NOTHING`
+      ) ON CONFLICT(id) DO NOTHING`,
     );
 
     const insertFixtures = db.transaction(() => {
@@ -145,7 +145,7 @@ function loadFixtures(db: Sqlite3Database.Database) {
           event.updatedAt || null,
           event.information ? JSON.stringify(event.information) : null,
           event.projectId || null,
-          event.applicationId || null
+          event.applicationId || null,
         );
       });
     });
@@ -153,7 +153,7 @@ function loadFixtures(db: Sqlite3Database.Database) {
     insertFixtures();
 
     console.log(
-      `[scripts/db/loadFixtures] Done, loaded ${fixtures.users.length} users, ${fixtures.websites.length} websites and ${fixtures.events.length} events`
+      `[scripts/db/loadFixtures] Done, loaded ${fixtures.users.length} users, ${fixtures.websites.length} websites and ${fixtures.events.length} events`,
     );
   } catch (error) {
     console.error("[scripts/db/loadFixtures] An error occurred:", error);
@@ -173,7 +173,7 @@ function main() {
         init: initialize & init database with migrations in ./migrations/ directory
 
         fixtures: load initial fixture located at scripts/data/fixtures.json
-      `
+      `,
       );
       process.exit(0);
     }

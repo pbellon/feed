@@ -21,7 +21,7 @@ const options = Object.values(FeedEventSubject).map(
   (value): Option => ({
     label: EventSubjectText({ subject: value }),
     subject: value,
-  })
+  }),
 );
 
 export function FeedSubjectFilter({
@@ -33,7 +33,7 @@ export function FeedSubjectFilter({
     (_: SyntheticEvent, value: Option | null) => {
       onChange(value?.subject ?? "");
     },
-    [onChange]
+    [onChange],
   );
   const selectedValue = useMemo(() => {
     if (value === "") return null;

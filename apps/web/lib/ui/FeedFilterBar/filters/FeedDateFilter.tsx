@@ -25,13 +25,13 @@ export function FeedDateFilter({
   value,
 }: FeedDateFilterProps) {
   const [currentValue, setCurrentValue] = useState(
-    () => parseLocalDate(value) ?? null
+    () => parseLocalDate(value) ?? null,
   );
 
   const handleChange = useCallback(
     (
       value: PickerValue,
-      ctx: PickerChangeHandlerContext<DateValidationError>
+      ctx: PickerChangeHandlerContext<DateValidationError>,
     ) => {
       setCurrentValue(value);
       try {
@@ -45,7 +45,7 @@ export function FeedDateFilter({
         // onChange
       }
     },
-    [onChange]
+    [onChange],
   );
 
   // sync locale state with outside value

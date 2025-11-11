@@ -1,7 +1,7 @@
 import { FeedSortableColumn, SortOrder } from "@feed/types";
 
 export function getColumnFromFeedSortableColumn(
-  column: FeedSortableColumn
+  column: FeedSortableColumn,
 ): string {
   switch (column) {
     case FeedSortableColumn.CREATED_AT:

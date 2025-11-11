@@ -21,7 +21,7 @@ const options = Object.values(FeedEventStatus).map(
   (value): StatusOption => ({
     label: EventStatusText({ status: value }),
     status: value,
-  })
+  }),
 );
 
 export function FeedStatusFilter({
@@ -32,11 +32,11 @@ export function FeedStatusFilter({
   const handleChange = useCallback(
     (
       _: SyntheticEvent,
-      value: { label: string; status: FeedEventStatus } | null
+      value: { label: string; status: FeedEventStatus } | null,
     ) => {
       onChange(value?.status ?? "");
     },
-    [onChange]
+    [onChange],
   );
   const selectedValue = useMemo(() => {
     if (value === "") return null;

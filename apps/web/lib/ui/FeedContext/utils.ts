@@ -40,7 +40,7 @@ function parseEventSubject(param: string | null): FeedEventSubject | undefined {
 
 function parsePositiveInt(
   param: string | null,
-  max?: number
+  max?: number,
 ): number | undefined {
   if (param && typeof param === "string") {
     const nb = parseInt(param, 10);
@@ -72,7 +72,7 @@ function parseSortOrder(param: string | null): SortOrder | undefined {
 }
 
 export function parseEventSearchParams(
-  params: ReadonlyURLSearchParams
+  params: ReadonlyURLSearchParams,
 ): FeedContextState {
   const startDate = parseDate(params.get("startDate"));
   const endDate = parseDate(params.get("endDate"));

@@ -26,7 +26,7 @@ function toggleSortOrder(order: SortOrder): SortOrder {
 
 export const reducer: Reducer<FeedContextState, FeedContextAction> = (
   state,
-  action
+  action,
 ) => {
   switch (action.type) {
     case FeedContextActionKind.RESET_FILTERS: {

@@ -48,7 +48,7 @@ server.get(
       });
     });
     return websites;
-  }
+  },
 );
 server.get(
   "/websites/:websiteId",
@@ -64,7 +64,7 @@ server.get(
   (request, reply) => {
     const { websiteId } = request.params;
     const stmt = request.betterSqlite3.prepare(
-      "SELECT * FROM websites WHERE id = ?"
+      "SELECT * FROM websites WHERE id = ?",
     );
     const res = stmt.get(websiteId) as Website | null;
     if (!res) {
@@ -76,7 +76,7 @@ server.get(
       return;
     }
     return res;
-  }
+  },
 );
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -179,7 +179,7 @@ server.get(
 
     // Count total events
     const countStmt = request.betterSqlite3.prepare(
-      `SELECT COUNT(*) as total FROM events WHERE website_id = ? ${whereClause ? `AND ${whereClause}` : ""}`
+      `SELECT COUNT(*) as total FROM events WHERE website_id = ? ${whereClause ? `AND ${whereClause}` : ""}`,
     );
     const total = (
       countStmt.get(websiteId, ...whereParams) as { total: number }
@@ -221,7 +221,7 @@ server.get(
       pagination,
       events,
     };
-  }
+  },
 );
 
 server.listen({ port: 8080 }, (err, address) => {

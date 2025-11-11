@@ -134,7 +134,7 @@ export function FeedContextProvider({ children }: FeedProviderProps) {
       setPageSize,
       sortBy,
       resetFilters,
-    ]
+    ],
   );
 
   const buildSearchParams = useCallback(() => {

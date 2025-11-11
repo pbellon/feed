@@ -39,7 +39,7 @@ export function WebsiteSelector({ websiteId, websites }: WebsiteSelectorProps) {
         router.push(`/${e.target.value}/${subPath}`);
       });
     },
-    [router, subPath]
+    [router, subPath],
   );
 
   // sync outside `websiteId` props with locally selected website

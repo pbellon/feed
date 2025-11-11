@@ -2,7 +2,7 @@
  * Utility to convert arbitrary data record to URL search param string
  */
 export function constructSearchParams(
-  rec: Record<string, string | undefined>
+  rec: Record<string, string | undefined>,
 ): string | undefined {
   const res: Record<string, string> = {};
   let entries = 0;

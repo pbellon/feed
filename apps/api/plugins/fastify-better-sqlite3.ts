@@ -22,7 +22,7 @@ type BetterSqlite3PluginOptions = {
 };
 
 function createDbConnection(
-  options: BetterSqlite3PluginOptions
+  options: BetterSqlite3PluginOptions,
 ): Sqlite3Database.Database {
   // If path to db exists, use that, else create a db in memory
   const file = options.pathToDb ? options.pathToDb : ":memory:";

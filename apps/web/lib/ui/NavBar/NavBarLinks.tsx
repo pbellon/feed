@@ -32,7 +32,7 @@ export default function NavBarLinks() {
           active: pathname.startsWith(href),
         };
       }),
-    [websiteId, pathname]
+    [websiteId, pathname],
   );
 
   return (

@@ -67,14 +67,14 @@ export function FeedTable({ websiteId }: FeedTableProps) {
     (_: unknown, newPage: number) => {
       setPage(newPage);
     },
-    [setPage]
+    [setPage],
   );
 
   const handleRowsPerPageChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPageSize(parseInt(e.target.value, 10));
     },
-    [setPageSize]
+    [setPageSize],
   );
 
   if (!data && isLoading) {
