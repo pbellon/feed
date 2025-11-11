@@ -1,3 +1,5 @@
+"use client";
+
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import type { PickerValue } from "@mui/x-date-pickers/internals";
@@ -68,3 +70,5 @@ export function FeedDateFilter({
     </LocalizationProvider>
   );
 }
+
+export default FeedDateFilter;

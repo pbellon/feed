@@ -1,3 +1,5 @@
+"use client";
+
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { SyntheticEvent, useCallback, useMemo } from "react";
@@ -51,3 +53,5 @@ export function FeedSubjectFilter({
     />
   );
 }
+
+export default FeedSubjectFilter;

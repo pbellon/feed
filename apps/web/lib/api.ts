@@ -26,13 +26,11 @@ function url(path: string): string {
 
 export async function getWebsites(): Promise<Website[]> {
   const req = await fetch(url("/websites"));
-  await delay();
   return (await req.json()) as Website[];
 }
 
 export async function getWebsite(websiteId: number): Promise<Website> {
   const req = await fetch(url(`/websites/${websiteId}`));
-  await delay();
   return (await req.json()) as Website;
 }
 
@@ -57,7 +55,6 @@ export async function getEvents(
   }
 
   const req = await fetch(fullUrl);
-  await delay();
 
   const data = (await req.json()) as FeedEventsReply;
   return data;
