@@ -6,6 +6,8 @@ import { Suspense } from "react";
 import { getWebsites } from "@/lib/api";
 import { LoadingPlaceholder } from "@/lib/ui/LoadingPlaceholder";
 
+export const dynamic = "force-dynamic";
+
 /**
  * Actual component doing fetch & redirect logic that can be wrapped in
  * Suspense. This is done to simplify build process.
