@@ -1,16 +1,27 @@
 # Demo plan
 
 - open localhost:3000
-- click on created at col header
-- filter by status "Success" with keyboard
-- click on created at col header
-- filter by subject "Appliction"
-- clear "status" filter
 
-- switch to www.sneakers.fr
-- select "Row per page => 5"
-- go to next page
-- enter 01/04/2025 in Creation start date
-- select 30/04/2025 in Creation end date
-- select Subject "Target"
-- click "Clear filters"
+- Sorting
+  - sort by "status" 2 times
+  - sort by "created at 2 times" to go back to descending
+
+- Pagination
+  - select 5 rows per page
+  - go to next page
+
+- Filtering
+  - filter by status = Success
+  - filter by subject with keyboard = Caching
+  - reset status filter
+  - reset all filters
+
+- Navigation
+  - select another website
+  - filter with keyboard by creation at >= 01/06/2025
+  - filter with selection by creation at <= 30/06/2025
+  - go to "Configuration"
+  - go back to activity feed
+
+- Responsiveness
+  - resize page to demonstrate responsiveness of filter bar

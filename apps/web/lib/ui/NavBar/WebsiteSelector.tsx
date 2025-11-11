@@ -39,7 +39,7 @@ export function WebsiteSelector({ websiteId, websites }: WebsiteSelectorProps) {
         router.push(`/${e.target.value}/${subPath}`);
       });
     },
-    [router, subPath],
+    [router, subPath]
   );
 
   // sync outside `websiteId` props with locally selected website
@@ -56,7 +56,6 @@ export function WebsiteSelector({ websiteId, websites }: WebsiteSelectorProps) {
       disableUnderline
       variant="standard"
       MenuProps={{
-        PopoverClasses: { root: styles.popover },
         PaperProps: { sx: { mt: 1, borderRadius: 2 } },
       }}
     >

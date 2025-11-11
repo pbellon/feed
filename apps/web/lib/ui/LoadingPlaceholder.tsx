@@ -8,7 +8,8 @@ export function LoadingPlaceholder() {
         display: "flex",
         width: "100%",
         alignItems: "center",
-        height: "50vh",
+        justifyContent: "center",
+        height: "100%",
       }}
     >
       <CircularProgress />

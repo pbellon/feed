@@ -1,67 +1,45 @@
 # TODO
 
-- affichage user dans le listing
 - Optimization là où c'est possible
   - bundle
   - external resources loading
-  - ??
-- polish naming & structure
 
-# Plan
+# Amélioration V2
 
-- [x] modeliser les données
-- [x] architecture globale du projet
-- [x] squelette du front
-- [x] implem DB (create/fixtures)
-- [x] implem listing de base + pagination (back+front)
-- [x] implem filtering (back+front)
-  - [x] par status
-  - [x] par subject
-  - [x] par date
-- suivant le temps:
-  - tester le listing côté API (voir comment faire pour créer à la volée la DB in memory)
-  - tester le front, à voir quoi, ça peut se jouer de dire je vais tester le listing avec un jeu de données mock via MSW
+## Front / Next.js
 
-# Notes sur le dev / Amélioration V2
+- gestion du thème de MUI: là j'ai pas utilisé le système de thème de material UI à part pour configurer la police en Roboto, idéallement il faudrait aussi penser la palette de couleurs.
 
-## automatisation
+- Rajout de helpers pour chacun des filtres documentant le rôle du filtre en question. Particulièrement pour les filtres de dates qui sont souvent tricky à bien comprendre. Ici expliquer que ça filtre sur created_at et les différents use case: start (>=), end (<=), start + end (between)
 
-- trop de taches manuelles pour la partie API / types, très probablement automatisable via nodemon mais j'ai pas voulu complexifier plus que ça
+- Affichage en mode "sticky" pour la table. Si on a beaucoup de données on va perdre la barre de filtres et le header de la table. Je ne l'ai pas fait pour ne pas trop galérer avec les composant MUI et comment gérer le `top` en sticky qui est complexe, surtout avec une filter bar dont la hauteur n'est pas fixe.
 
-## apps/api/scripts/db.js
+- Probablement un aspect plus responsive pour la table en mode "mobile" mais les contraintes parlait d'un mode desktop donc j'ai juste un peu bossé ça sur la barre de filtres pour la démo
 
-- un peu quick & dirty pour setup la DB et pas beaucoup plus que ça
+- Un package "ui" (dans `packages/`) pour les composants "briques" élémentaire avec son propre storybook. Ici il y en avait trop peu pour que ça soit justifié et ça aurait alourdit un peu le dev
 
-- idéallement on pourrait avoir des systèmes plus évolué pour mettre à jour les
-  données lors du chargement des fixtures
+- plus de tests: je n'ai testé que la FeedFilterBar pour faire la démonstration de comment je testerais un composant mais idéallement il faudrait à minima tester toute les fonctions de librairies sous `apps/web/lib`
 
-- avoir un système de migration, là je suis allé au plus simple pour la démo
+- j'étais pas super à l'aise avec NextJS, notemment pour ce qui est du caching et de la gestion des états de chargement, je pense que ça se voit sur comment j'ai structuré ça. Dans une v2 je reprendrais à tête reposée ce sujet pour voir comment faire ça mieux. Là ce qui m'a complexifié la tache c'est que quasiment toute mes routes / segments sont dynamique. Donc j'avais beaucoup de mal à voir comment bénéficier des optimisation de nextjs.
 
-## Système de tri
+- il y a un cas limite que je n'ai pas réussit à bien gérer: si on modifie à la main l'URL search param "page" avec une valeur trop grosse alors ça provoque un affichage un peu buggué et on peut difficilement revenir au début des events. Y'a plusieurs façon de régler le soucis comme rajouter un système d'actions custom sur le tableau. Ou bien détecter directement ce cas là une fois que les données sont chargées et rediriger l'utilisateur vers la dernière page disponible.
 
-Actuellement les données du feed sont toujours triées de la même façon: par leur createdAt, du plus
-récent au plus ancien.
+## API
 
-## Bug connu sur les search params
+- nécessité de refaire un pnpm build à chaque modification, ce qui est un peu pénible. C'est très probablement automatisable via nodemon mais j'ai pas voulu complexifier plus que ça
 
-Si on met à la main un `page=100` par exemple dans les search params de l'URL ça va provoquer un cas
-limite un peu pénible puisqu'on ne peut pas facilement reset la page courante. J'ai fait le choix de
-ne pas le gérer dans cette démo pour éviter d'y passer trop de temps mais, dans l'absolu, il
-faudrait le prendre en compte.
+- rendre toute la partie SQL plus robuste et clean, là c'est vraiment "quick & dirty" pour aller au plus vite, je me suis surtout concentré sur la partie front / next.js
+  - système de migration plutôt que des requêtes SQL directement dans le JS
+  - rendre plus lisible la partie `apps/api/server.ts` en rajoutant une couche entre les points d'API et la DB, une sorte de client DB maison plutôt que
+    d'exécuter
 
-- soit en faisant un reset de cette page si on détecte que dans les données chargées qu'on ne
-  devrait pas être sur cette page, mais ça demande un peu de logique back / front et des màj
+- tester complètement l'API en faisant tourner la DB en mode "in memory"
 
-- soit en autorisant l'utilisateur à revenir au début du tableau avec un système de pagination plus
-  customisé comme montré ici: https://mui.com/material-ui/react-table/#custom-pagination-actions
-  mais c'est pas non plus très satisfaisant car ça demande une action utilisateur.
+- surement utiliser une autre DB, là j'ai pris SQLite par facilité d'installation mais si ça avait été une "vraie" DB en prod j'aurais utilisé du PostgreSQL, le tout dockerisé pour facilité l'utilisation côté dev.
 
-## "Dockeriser" le tout
+## Global / Infra / CI/CD
 
-- un docker par composant principal
-- un pour l'API
-- un pour l'app nextjs
-- un pour l'ensemble
-
-Pour faciliter le build et le déploiement et pour pouvoir plus facilement "scaler" horizontallement
-via kubernetes ou autre.
+- "Dockeriser" le tout pour faciliter le build et le déploiement et, peut-être, faciliter ainsi du scaling horizontal via kubernetes
+  - un pour l'API
+  - un pour l'app nextjs
+  - un pour l'ensemble, pour les devs

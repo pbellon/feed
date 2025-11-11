@@ -14,7 +14,7 @@ const baseUrl = process.env.API_BASE_URL ?? "http://localhost:8080";
  * ```
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function delay(amountInMs: number): Promise<void> {
+function delay(amountInMs: number = 300): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, amountInMs);
   });
@@ -26,13 +26,13 @@ function url(path: string): string {
 
 export async function getWebsites(): Promise<Website[]> {
   const req = await fetch(url("/websites"));
-  await delay(1000);
+  await delay();
   return (await req.json()) as Website[];
 }
 
 export async function getWebsite(websiteId: number): Promise<Website> {
   const req = await fetch(url(`/websites/${websiteId}`));
-  await delay(1000);
+  await delay();
   return (await req.json()) as Website;
 }
 
@@ -57,7 +57,7 @@ export async function getEvents(
   }
 
   const req = await fetch(fullUrl);
-  await delay(1000);
+  await delay();
 
   const data = (await req.json()) as FeedEventsReply;
   return data;
