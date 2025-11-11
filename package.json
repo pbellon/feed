@@ -2,13 +2,14 @@
   "name": "feed",
   "private": true,
   "scripts": {
-    "db:init": "pnpm --filter @feed/api db:init",
     "build": "turbo run build",
+    "check-types": "turbo run check-types",
+    "db:init": "pnpm --filter @feed/api db:init",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "lint:fix": "turbo run lint -- --fix",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "lint:fix": "turbo run lint -- --fix",
+    "lint": "turbo run lint",
+    "start": "turbo run start"
   },
   "dependencies": {
     "typebox": "1.0.51"

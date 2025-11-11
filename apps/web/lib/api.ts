@@ -55,7 +55,6 @@ export async function getEvents(
   }
 
   const req = await fetch(fullUrl);
-
   const data = (await req.json()) as FeedEventsReply;
   return data;
 }

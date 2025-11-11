@@ -20,6 +20,12 @@
         "!.next/cache/**"
       ]
     },
+    "start": {
+      "dependsOn": [
+        "^build",
+        "^start"
+      ]
+    },
     "lint": {
       "dependsOn": [
         "^lint"
