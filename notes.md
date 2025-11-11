@@ -29,19 +29,18 @@ Ce document liste les améliorations possibles que j'identifie sur ma solution.
 - nécessité de refaire un pnpm build à chaque modification, ce qui est un peu pénible. C'est très probablement automatisable via nodemon mais j'ai pas voulu complexifier plus que ça
 
 - rendre toute la partie SQL plus robuste et clean, là c'est vraiment "quick & dirty" pour aller au plus vite, je me suis surtout concentré sur la partie front / next.js
-  - système de migration plutôt que des requêtes SQL directement dans le JS
-  - rendre plus lisible la partie `apps/api/server.ts` en rajoutant une couche entre les points d'API et la DB, une sorte de client DB maison plutôt que
-    d'exécuter
+  - système de migration plutôt que des requêtes SQL de création directement dans le JS (`scripts/db.ts`)
+  - rendre plus lisible la partie `apps/api/server.ts` en rajoutant une couche entre les points d'API et la DB, une sorte de client DB maison plutôt que d'exécuter du SQL directement depuis `server.ts`. On pourrait faire une sorte de query builder qui abstrait toute les requêtes "raw" et du coup rendre les points d'API plus lisibles.
 
 - tester complètement l'API en faisant tourner la DB en mode "in memory"
 
-- surement utiliser une autre DB, là j'ai pris SQLite par facilité d'installation mais si ça avait été une "vraie" DB en prod j'aurais utilisé du PostgreSQL, le tout dockerisé pour facilité l'utilisation côté dev.
+- surement utiliser une autre DB. Là j'ai pris SQLite par facilité d'installation mais si ça avait été une "vraie" DB en prod j'aurais utilisé du PostgreSQL, le tout dockerisé pour facilité l'utilisation côté dev.
 
-## Global / Infra / CI/CD
+## Global
 
 - "Dockeriser" le tout pour faciliter le build et le déploiement et, peut-être, faciliter ainsi du scaling horizontal via kubernetes
-  - un pour l'API
-  - un pour l'app nextjs
-  - un pour l'ensemble, pour les devs
+  - un conteneur pour l'API
+  - un conteneur pour l'app nextjs
+  - un conteneur pour l'ensemble
 
-- système d'action sur le repo github pour lancer le lint et les tests au push
+- rajouter système d'action sur le repo github pour lancer le lint et les tests au push
