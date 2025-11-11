@@ -36,7 +36,7 @@ export async function getWebsite(websiteId: number): Promise<Website> {
 
 export async function getEvents(
   websiteId: number | string,
-  query: FeedEventsQuery
+  query: FeedEventsQuery,
 ): Promise<FeedEventsReply> {
   const searchQuery = constructSearchParams({
     endDate: query.endDate,

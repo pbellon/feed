@@ -9,7 +9,6 @@ import { LoadingPlaceholder } from "@/lib/ui/LoadingPlaceholder";
 /**
  * Actual component doing fetch & redirect logic that can be wrapped in
  * Suspense. This is done to simplify build process.
- *
  */
 async function HomeContent() {
   const websites = await getWebsites();
