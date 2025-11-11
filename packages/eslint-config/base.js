@@ -4,6 +4,7 @@ import turboPlugin from "eslint-plugin-turbo";
 import importPlugin from "eslint-plugin-import";
 import tseslint from "typescript-eslint";
 import onlyWarn from "eslint-plugin-only-warn";
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 
 /**
  * A shared ESLint configuration for the repository.
@@ -13,6 +14,7 @@ import onlyWarn from "eslint-plugin-only-warn";
 export const config = [
   js.configs.recommended,
   eslintConfigPrettier,
+  eslintPluginPrettierRecommended,
   ...tseslint.configs.recommended,
   {
     plugins: {
