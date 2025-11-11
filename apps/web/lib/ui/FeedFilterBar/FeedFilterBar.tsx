@@ -1,16 +1,16 @@
 "use client";
 
-import Paper from "@mui/material/Paper";
+import DeleteIcon from "@mui/icons-material/Delete";
 import FilterAltIcon from "@mui/icons-material/FilterAltOutlined";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
 import { FeedStatusFilter } from "./filters/FeedStatusFilter";
 import { FeedSubjectFilter } from "./filters/FeedSubjectFilter";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Tooltip from "@mui/material/Tooltip";
 
-import styles from "./FeedFilterBar.module.css";
+import { useFeedProvider } from "@/lib/hooks/useFeedProvider";
 import { FeedDateFilter } from "./filters/FeedDateFilter";
-import Button from "@mui/material/Button";
-import { useFeedProvider } from "../../hooks/useFeedProvider";
+import styles from "./FeedFilterBar.module.css";
 
 export function FeedFilterBar() {
   const {
@@ -22,6 +22,7 @@ export function FeedFilterBar() {
     setEndDate,
     resetFilters,
   } = useFeedProvider();
+
   return (
     <Paper className={styles.filterBar}>
       <Tooltip title="Feed events filter" placement="top">
@@ -42,13 +43,13 @@ export function FeedFilterBar() {
         />
         <FeedDateFilter
           className={styles.filter}
-          label="Start date"
+          label="Creation start date"
           onChange={setStartDate}
           value={filters.startDate}
         />
         <FeedDateFilter
           className={styles.filter}
-          label="End date"
+          label="Creation end date"
           onChange={setEndDate}
           value={filters.endDate}
         />
@@ -56,6 +57,7 @@ export function FeedFilterBar() {
       <Tooltip title="Clear filters" placement="top">
         <span className={styles.clearButtonWrapper}>
           <Button
+            aria-label="Reset filters"
             variant="contained"
             color="warning"
             size="large"

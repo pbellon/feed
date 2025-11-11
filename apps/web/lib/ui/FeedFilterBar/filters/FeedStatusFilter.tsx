@@ -43,6 +43,7 @@ export function FeedStatusFilter({
 
   return (
     <Autocomplete
+      disablePortal
       size="small"
       className={className}
       options={options}

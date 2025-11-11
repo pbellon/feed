@@ -1,16 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
-
-import { enGB } from "date-fns/locale";
-
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { PickerValue } from "@mui/x-date-pickers/internals";
-import { formatLocalDate, parseLocalDate } from "@/lib/date";
-import {
+import type { PickerValue } from "@mui/x-date-pickers/internals";
+import type {
   DateValidationError,
   PickerChangeHandlerContext,
 } from "@mui/x-date-pickers/models";
+import { enGB } from "date-fns/locale";
+import { useCallback, useEffect, useState } from "react";
+
+import { formatLocalDate, parseLocalDate } from "@/lib/date";
 
 type FeedDateFilterProps = {
   className?: string;
@@ -60,7 +59,10 @@ export function FeedDateFilter({
         className={className}
         label={label}
         onChange={handleChange}
-        slotProps={{ field: { clearable: true }, textField: { size: "small" } }}
+        slotProps={{
+          field: { clearable: true },
+          textField: { size: "small" },
+        }}
         value={currentValue}
       />
     </LocalizationProvider>
