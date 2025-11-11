@@ -1,4 +1,5 @@
 import type { FeedEventsReply, FeedEventsQuery, Website } from "@feed/types";
+
 import { constructSearchParams } from "./searchParams";
 
 const baseUrl = process.env.API_BASE_URL ?? "http://localhost:8080";

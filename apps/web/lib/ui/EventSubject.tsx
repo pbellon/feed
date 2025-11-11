@@ -1,15 +1,15 @@
-import { FeedEventSubject } from "@feed/types";
-
-import CloudIcon from "@mui/icons-material/Cloud";
-import CachedIcon from "@mui/icons-material/Cached";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import SettingsIcon from "@mui/icons-material/Settings";
-import DnsIcon from "@mui/icons-material/Dns";
-import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
-import ConstructionIcon from "@mui/icons-material/Construction";
-import ExtensionIcon from "@mui/icons-material/Extension";
 import AdjustIcon from "@mui/icons-material/Adjust";
+import CachedIcon from "@mui/icons-material/Cached";
+import CloudIcon from "@mui/icons-material/Cloud";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import DnsIcon from "@mui/icons-material/Dns";
+import ExtensionIcon from "@mui/icons-material/Extension";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import PersonIcon from "@mui/icons-material/Person";
+import SettingsIcon from "@mui/icons-material/Settings";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+
+import { FeedEventSubject } from "@feed/types";
 
 export function EventSubjectText({ subject }: { subject: FeedEventSubject }) {
   switch (subject) {

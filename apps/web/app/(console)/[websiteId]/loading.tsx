@@ -1,7 +1,8 @@
-import { NavBarSkeleton } from "@/lib/ui/NavBar";
-import Typography from "@mui/material/Typography";
-import Skeleton from "@mui/material/Skeleton";
 import Container from "@mui/material/Container";
+import Skeleton from "@mui/material/Skeleton";
+import Typography from "@mui/material/Typography";
+
+import { NavBarSkeleton } from "@/lib/ui/NavBar";
 
 export default function Loading() {
   return (

@@ -1,8 +1,10 @@
-import { EventSubjectText } from "@/lib/ui/EventSubject";
-import { FeedEventSubject } from "@feed/types";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { SyntheticEvent, useCallback, useMemo } from "react";
+
+import { FeedEventSubject } from "@feed/types";
+
+import { EventSubjectText } from "@/lib/ui/EventSubject";
 
 type Option = {
   label: string;

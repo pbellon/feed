@@ -2,10 +2,10 @@
  * Date conversion utilities
  */
 
-import { parse } from "date-fns/parse";
-import { formatISO } from "date-fns/formatISO";
 import { format } from "date-fns/format";
+import { formatISO } from "date-fns/formatISO";
 import { isValid } from "date-fns/isValid";
+import { parse } from "date-fns/parse";
 
 // Format that will be used to store date in state & in URL for deep linking
 export const LOCAL_DATE_FORMAT = "dd-MM-yyyy";

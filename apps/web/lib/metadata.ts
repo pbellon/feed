@@ -1,4 +1,5 @@
-import { Metadata } from "next/types";
+import { type Metadata } from "next/types";
+
 import { getWebsite } from "./api";
 
 type Props = {
@@ -11,6 +12,7 @@ export function metadataGenerator(subtitle: string): MetadataGenerator {
   return async function generator(props: Props) {
     const { websiteId } = await props.params;
     const website = await getWebsite(websiteId);
+
     return {
       title: `Console | ${website.domain} | ${subtitle}`,
     };

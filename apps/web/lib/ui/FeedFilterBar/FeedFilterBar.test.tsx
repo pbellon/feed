@@ -1,15 +1,16 @@
-import { vi, describe, it, expect } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { vi, describe, it, expect } from "vitest";
 
-import { FeedContextCallbacks, FeedContextState } from "../FeedContext/types";
 import {
   FeedEventStatus,
   FeedEventSubject,
   FeedSortableColumn,
   SortOrder,
 } from "@feed/types";
+
 import { FeedFilterBar } from "./FeedFilterBar";
+import { FeedContextCallbacks, FeedContextState } from "../FeedContext/types";
 
 const setStatusMock = vi.fn();
 const setSubjectMock = vi.fn();

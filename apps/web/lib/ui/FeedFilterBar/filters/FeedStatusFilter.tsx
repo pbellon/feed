@@ -1,8 +1,10 @@
-import { EventStatusText } from "@/lib/ui/EventStatus";
-import { FeedEventStatus } from "@feed/types";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { SyntheticEvent, useCallback, useMemo } from "react";
+
+import { FeedEventStatus } from "@feed/types";
+
+import { EventStatusText } from "@/lib/ui/EventStatus";
 
 type StatusOption = {
   label: string;

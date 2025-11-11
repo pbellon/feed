@@ -1,9 +1,9 @@
 /**
  * Adapted from https://github.com/punkish/fastify-better-sqlite3/blob/main/index.js
  */
-import fp from "fastify-plugin";
 import Sqlite3Database from "better-sqlite3";
 import type { FastifyPluginCallback } from "fastify";
+import fp from "fastify-plugin";
 
 declare module "fastify" {
   interface FastifyRequest {

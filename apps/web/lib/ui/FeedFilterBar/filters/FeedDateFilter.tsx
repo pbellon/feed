@@ -1,7 +1,7 @@
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import type { PickerValue } from "@mui/x-date-pickers/internals";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import type {
   DateValidationError,
   PickerChangeHandlerContext,

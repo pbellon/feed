@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
 import Sqlite3Database from "better-sqlite3";
 
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));

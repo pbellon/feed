@@ -1,17 +1,20 @@
-import { getEvents } from "@/lib/api";
-import {
-  FeedContextSort,
-  type FeedContextFilters,
-  type FeedContextPagination,
-} from "@/lib/ui/FeedContext/types";
+import { type UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+
 import {
   FeedEventsQuery,
   FeedEventsReply,
   FeedEventStatus,
   FeedEventSubject,
 } from "@feed/types";
-import { type UseQueryResult, useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
+
+import { getEvents } from "@/lib/api";
+import type {
+  FeedContextSort,
+  FeedContextFilters,
+  FeedContextPagination,
+} from "@/lib/ui/FeedContext/types";
+
 import { convertDateForApi } from "../date";
 
 type UseFeedQueryParams = {

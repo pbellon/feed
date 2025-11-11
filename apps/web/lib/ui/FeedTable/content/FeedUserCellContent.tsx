@@ -1,9 +1,10 @@
-import { User } from "@feed/types";
+import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
-import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
+
+import { User } from "@feed/types";
 
 export function FeedSubjectCellContentSkeleton() {
   return (

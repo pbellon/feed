@@ -11,8 +11,9 @@ import {
   useTransition,
 } from "react";
 
-import styles from "./WebsiteSelector.module.css";
 import { Website } from "@feed/types";
+
+import styles from "./WebsiteSelector.module.css";
 
 type WebsiteSelectorProps = {
   websites: Website[];

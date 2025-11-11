@@ -1,3 +1,5 @@
+import { ReadonlyURLSearchParams } from "next/navigation";
+
 import {
   FeedEventStatus,
   FeedEventSubject,
@@ -5,9 +7,9 @@ import {
   SortOrder,
 } from "@feed/types";
 
-import { ReadonlyURLSearchParams } from "next/navigation";
-import { FeedContextState } from "./types";
 import { parseLocalDate } from "@/lib/date";
+
+import { FeedContextState } from "./types";
 
 function parseDate(param: string | null): string | undefined {
   if (param === null) {

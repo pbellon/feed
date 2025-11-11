@@ -1,5 +1,6 @@
+import Chip, { type ChipOwnProps } from "@mui/material/Chip";
+
 import { FeedEventStatus } from "@feed/types";
-import Chip, { ChipOwnProps } from "@mui/material/Chip";
 
 export function EventStatusText({
   status,

@@ -1,5 +1,7 @@
 # Getting Started with [Fastify-CLI](https://www.npmjs.com/package/fastify-cli)
+
 This project was bootstrapped with Fastify-CLI.
+More info on fastify + typescript: [documentation](https://fastify.dev/docs/latest/Reference/TypeScript/)
 
 ## Available Scripts
 

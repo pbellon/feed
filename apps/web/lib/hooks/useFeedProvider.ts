@@ -2,8 +2,8 @@
 
 import { use } from "react";
 
-import { type FeedContextValue } from "@/lib/ui/FeedContext/types";
 import { FeedProviderContext } from "@/lib/ui/FeedContext/FeedContext";
+import { type FeedContextValue } from "@/lib/ui/FeedContext/types";
 
 export function useFeedProvider(): FeedContextValue {
   const ctx = use(FeedProviderContext);

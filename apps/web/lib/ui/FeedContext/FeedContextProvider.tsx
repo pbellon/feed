@@ -1,10 +1,5 @@
 "use client";
 
-import {
-  FeedEventStatus,
-  FeedEventSubject,
-  FeedSortableColumn,
-} from "@feed/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   useCallback,
@@ -14,10 +9,17 @@ import {
   useRef,
   useState,
 } from "react";
+
+import type {
+  FeedEventStatus,
+  FeedEventSubject,
+  FeedSortableColumn,
+} from "@feed/types";
+
+import { FeedProviderContext } from "./FeedContext";
 import { reducer } from "./reducer";
 import { FeedContextActionKind, FeedContextValue } from "./types";
 import { parseEventSearchParams } from "./utils";
-import { FeedProviderContext } from "./FeedContext";
 
 type FeedProviderProps = {
   children: React.ReactNode;

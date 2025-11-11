@@ -1,6 +1,7 @@
-import NavBar, { NavBarSkeleton } from "@/lib/ui/NavBar";
 import Container from "@mui/material/Container";
 import { Suspense } from "react";
+
+import NavBar, { NavBarSkeleton } from "@/lib/ui/NavBar";
 
 type ConsoleLayoutProps = Readonly<{
   children: React.ReactNode;

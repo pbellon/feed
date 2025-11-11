@@ -1,5 +1,9 @@
-// https://fastify.dev/docs/latest/Reference/TypeScript/
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
 import { Type, type TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
+import Fastify from "fastify";
+
 import {
   WebsiteSchema,
   type FeedEvent,
@@ -11,9 +15,7 @@ import {
   ApiErrorReplySchema,
   FeedEventSubject,
 } from "@feed/types";
-import Fastify from "fastify";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+
 import fastifyBetterSqlite3Plugin from "./plugins/fastify-better-sqlite3.js";
 import { ApiFeedEventsReplySchema, ErrorCode } from "./types.js";
 import { getColumnFromFeedSortableColumn, getSortOrder } from "./utils.js";

@@ -1,4 +1,5 @@
 import Skeleton from "@mui/material/Skeleton";
+
 import styles from "./NavBar.module.css";
 
 export function NavBarSkeleton() {

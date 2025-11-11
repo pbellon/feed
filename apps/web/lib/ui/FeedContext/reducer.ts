@@ -1,11 +1,13 @@
 import { Reducer } from "react";
-import {
-  FeedContextAction,
-  FeedContextActionKind,
-  FeedContextPagination,
-  FeedContextState,
-} from "./types";
+
 import { SortOrder } from "@feed/types";
+
+import {
+  type FeedContextAction,
+  FeedContextActionKind,
+  type FeedContextPagination,
+  type FeedContextState,
+} from "./types";
 
 function resetPage(pagination: FeedContextPagination): FeedContextPagination {
   return {
