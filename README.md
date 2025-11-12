@@ -1,6 +1,6 @@
 # Feed
 
-This project is a recruitement exercise. This is not designed to be used in the wild but feel free to play with it.
+This project is a recruitement exercise. This is not designed to be used in the wild but feel free to play with it. It was bootstrapped using `pnpm dlx create-turbo@latest`.
 
 ## Get started
 
@@ -82,14 +82,45 @@ pnpm build && pnpm start
 # At this point you can open http://localhost:3000 in your browser
 ```
 
+## Available scripts
+
+### `pnpm dev`
+
+Start `@feed/api` and `@feed/web` in development mode
+
+### `pnpm start`
+
+Start `@feed/api` and `@feed/web` in production mode
+
+### `pnpm lint`
+
+Check linting rules accross the mono-repo. You can also run `pnpm lint:fix` to fix auto-resolvable linting issues.
+
+### `pnpm build`
+
+Build the whole mono-repo packages.
+
+### `pnpm format`
+
+Format the code of the mono-repo using prettier.
+
+### `pnpm check-types`
+
+Check all types accross the mono-repo.
+
+### `pnpm init-db`
+
+Initialize database of the API app in apps/api.
+
 ## Project structure
 
-The main parts of the app are:
+The whole project is divided into three main parts:
 
-- `apps/web` next.js frontend app
-- `apps/api` fastify API application + SQLite database
-- `packages/types` shared types & schemas between the front and the API
-- `packages/eslint-config` shared configs for eslint
+| Path             | Package name  | Description                                          |
+| ---------------- | ------------- | ---------------------------------------------------- |
+| `apps/web`       | `@feed/web`   | Next.js frontend app                                 |
+| `apps/api`       | `@feed/api`   | Fastify API application + SQLite database            |
+| `packages/types` | `@feed/types` | Shared types & schemas between the front and the API |
 
 ### Points of interest for the exercise
 

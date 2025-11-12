@@ -1,4 +1,4 @@
-# Getting Started with [Fastify-CLI](https://www.npmjs.com/package/fastify-cli)
+# `@feed/api`
 
 This project was bootstrapped with Fastify-CLI.
 More info on fastify + typescript: [documentation](https://fastify.dev/docs/latest/Reference/TypeScript/)
@@ -7,11 +7,11 @@ More info on fastify + typescript: [documentation](https://fastify.dev/docs/late
 
 In the project directory, you can run:
 
-### `npm build`
+### `npm run build`
 
 Transpile typescript into runable JS code, required for `dev` and `start`
 
-### `npm init-db`
+### `npm run init-db`
 
 Create SQLite database and load initial fixtures located in `scripts/data/fixtures.json`
 
@@ -20,6 +20,14 @@ Create SQLite database and load initial fixtures located in `scripts/data/fixtur
 To start the app in dev mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm start`
+### `npm run lint`
 
-For production mode, alias of `npm run dev` to ease `pnpm start` at the root of the mono-repo.
+Check linting rules via eslint.
+
+### `npm run check-type`
+
+Check types of the app.
+
+### `npm run start`
+
+Alias of `npm run dev` to ease `pnpm start` at the root of the mono-repo.
