@@ -44,3 +44,5 @@ Ce document liste les améliorations possibles que j'identifie sur ma solution.
   - un conteneur pour l'ensemble
 
 - rajouter système d'action sur le repo github pour lancer le lint et les tests au push
+
+- renforcer les règles typescript et eslint, là je suis parti des "recommended" sans beaucoup paramétrer les règles. Dans une v2 je repasserais dessus pour améliorer l'homogéneité du code.
