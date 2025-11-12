@@ -8,6 +8,8 @@ This guide covers how to get & start the project.
 
 ### TL;DR / Quickstart
 
+The whole process can be summarized in the following commands. You can check the detailed process bellow for more information on each step.
+
 ```shell
 git clone https://github.com/pbellon/feed
 cd feed
