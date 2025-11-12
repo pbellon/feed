@@ -16,7 +16,7 @@ Ce document liste les améliorations possibles que j'identifie sur ma solution.
 
 - plus de tests: je n'ai testé que la `FeedFilterBar` pour faire la démonstration de comment je testerais un composant mais idéallement il faudrait à minima tester toute les fonctions et composants sous `apps/web/lib` ce qui représente plus ou moins le coeur fonctionnel de l'appli next.
 
-- j'étais pas super à l'aise avec NextJS, notemment pour ce qui est du caching et de la gestion des états de chargement, je pense que ça se voit sur comment j'ai structuré ça. Dans une v2 je reprendrais bien ça à tête reposée ce sujet pour voir comment faire ça mieux. Là ce qui m'a complexifié la tache c'est que quasiment toute mes routes / segments sont dynamique. Donc j'avais beaucoup de mal à voir comment bénéficier des optimisation de nextjs.
+- Mieux utiliser next.js: j'étais pas super à l'aise avec NextJS, notemment pour ce qui est du caching et de la gestion des états de chargement, je pense que ça se voit sur comment j'ai structuré ça. Dans une v2 je reprendrais à tête reposée ce sujet pour voir comment faire ça mieux. Ce qui m'a un peu complexifié la tache lors de l'exercice c'est que quasiment toute mes routes / segments sont dynamique. Donc j'avais beaucoup de mal à voir comment bénéficier des optimisation de nextjs.
 
 - il y a un cas limite que je n'ai pas réussi à bien gérer: si on modifie à la main search param "page" de l'URL avec une valeur trop grosse alors ça provoque un affichage un peu buggué et on peut difficilement revenir au début du feed. Il y a plusieurs façon de régler le soucis comme rajouter un système d'actions custom sur le tableau. Ou bien détecter directement ce cas là une fois que les données sont chargées et rediriger l'utilisateur vers la dernière page disponible.
 
@@ -26,7 +26,9 @@ Ce document liste les améliorations possibles que j'identifie sur ma solution.
 
 ## API
 
-- nécessité de refaire un pnpm build à chaque modification, ce qui est un peu pénible. C'est très probablement automatisable via nodemon mais j'ai pas voulu complexifier plus que ça
+- rajouter un swagger / générateur de schéma OpenAPI sur l'API pour la documenter, probablement via [fastify-swagger](https://github.com/fastify/fastify-swagger)
+
+- retravailler les script pour enlever la nécessité de refaire un pnpm build à chaque modification, ce qui est un peu pénible. C'est très probablement automatisable via nodemon mais j'ai pas voulu complexifier plus que ça
 
 - rendre toute la partie SQL plus robuste et clean, là c'est vraiment "quick & dirty" pour aller au plus vite, je me suis surtout concentré sur la partie front / next.js
   - système de migration plutôt que des requêtes SQL de création directement dans le JS (`scripts/db.ts`)
